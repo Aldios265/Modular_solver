@@ -24,10 +24,11 @@ public class Test_solver {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.next();
         String[] outputString = input.split(",");
+        System.out.println(outputString[0]);
         if (outputString.length == 5) {
 
             try {
-                n = Integer.parseInt(outputString[0]);
+                n = Double.parseDouble(outputString[0]);
             } catch (Exception e){
                 toFind = "n";
                 if (boundary.contains(toFind)) {
