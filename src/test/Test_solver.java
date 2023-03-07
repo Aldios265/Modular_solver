@@ -79,20 +79,22 @@ public class Test_solver {
                     numberOfVariables++;
                 }
             }
+            System.out.println(toFind);
 
 
 
         } else {
-            throw new IllegalArgumentException("Введено неверное количество параметров");
+//            throw new IllegalArgumentException("Введено неверное количество параметров");
         }
-        if (numberOfVariables == 1) {
+        if (true) {
             System.out.println(solver());
         } else {
-            throw new IllegalArgumentException("Неверное количество неизвестных");
+//            throw new IllegalArgumentException("Неверное количество неизвестных");
         }
 
 
     }
+
 
     public static String solver() {
         switch (toFind) {
@@ -106,7 +108,7 @@ public class Test_solver {
                 if (numberOfBoundedVariables == 1) {
                     k = Math.log(2) / tHalf;
                 } else {
-                    k = (Math.log(n/n0) / t);
+                    k = -(Math.log(n/n0) / t);
                     tHalf = Math.log(2) / k;
                 }
 
@@ -117,7 +119,7 @@ public class Test_solver {
                 if (numberOfBoundedVariables == 1) {
                     tHalf = Math.log(2) / k;
                 } else {
-                    k = (Math.log(n/n0) / t);
+                    k = -(Math.log(n/n0) / t);
                     tHalf = Math.log(2) / k;
                 }
         }
