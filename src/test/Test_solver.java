@@ -22,7 +22,7 @@ public class Test_solver {
     public static void communicator() {
         System.out.println("Рассчет реакций первого порядка \n" +
                 "Введите значения через запятую: \n" +
-                "n, n0, k, t, t(1/2)");
+                "n, n0, t, k, t(1/2)");
         Scanner scanner = new Scanner(System.in);
         String input = scanner.next();
         String[] outputString = input.split(",");
@@ -34,7 +34,6 @@ public class Test_solver {
                     numberOfBoundedVariables++;
                 } else {
                     numberOfVariables++;
-                    System.out.println(0);
                 }
             } catch (Exception e) {
                 toFind = "n";
@@ -46,34 +45,31 @@ public class Test_solver {
                     numberOfBoundedVariables++;
                 } else {
                     numberOfVariables++;
-                    System.out.println(1);
                 }
             } catch (Exception e){
                 toFind = "n0";
             }
 
             try {
-                k = Double.parseDouble(outputString[2]);
+                t = Double.parseDouble(outputString[2]);
                 if (boundary.contains(toFind)) {
                     numberOfBoundedVariables++;
                 } else {
                     numberOfVariables++;
-                    System.out.println(2);
-                }
-            } catch (Exception e){
-                toFind = "k";
-
-            }
-            try {
-                t = Double.parseDouble(outputString[3]);
-                if (boundary.contains(toFind)) {
-                    numberOfBoundedVariables++;
-                } else {
-                    numberOfVariables++;
-                    System.out.println(3);
                 }
             } catch (Exception e){
                 toFind = "t";
+
+            }
+            try {
+                k = Double.parseDouble(outputString[3]);
+                if (boundary.contains(toFind)) {
+                    numberOfBoundedVariables++;
+                } else {
+                    numberOfVariables++;
+                }
+            } catch (Exception e){
+                toFind = "k";
             }
 
             try {
@@ -82,7 +78,6 @@ public class Test_solver {
                     numberOfBoundedVariables++;
                 } else {
                     numberOfVariables++;
-                    System.out.println(4);
                 }
             } catch (Exception e){
                 toFind = "tHalf";
@@ -92,12 +87,12 @@ public class Test_solver {
             throw new IllegalArgumentException("Введено неверное количество параметров");
         }
 
-//        System.out.println(numberOfBoundedVariables);
-//        System.out.println(numberOfVariables);
+        System.out.println(numberOfBoundedVariables);
         if (numberOfBoundedVariables == 2) {
             throw new IllegalArgumentException("переменные k и t(1/2) не могут быть заданы одновременно");
-        } else if (numberOfVariables + ((numberOfBoundedVariables == 1) ? 1 : 0 ) != 4) {
-            throw new IllegalArgumentException("Неверное количество неизвестных");
+        } else if (numberOfVariables + ((numberOfBoundedVariables == 1) ? 1 : 0 ) != 3) {
+            throw new IllegalArgumentException("Неверное количество аргументов.(параметры k и t(1/2) не являются неизвестными " +
+                    "в случае если хотябы один из них является аргументом)");
         } else {
             System.out.println(solver());
         }
@@ -111,6 +106,9 @@ public class Test_solver {
             case "n0":
                 n0 = n / Math.exp(-k * t);
 
+            case "t":
+                n = n0 * Math.exp(-k * t);
+
             case "k":
                 if (numberOfBoundedVariables == 1) {
                     k = Math.log(2) / tHalf;
@@ -118,9 +116,6 @@ public class Test_solver {
                     k = -(Math.log(n/n0) / t);
                     tHalf = Math.log(2) / k;
                 }
-
-            case "t":
-                n = n0 * Math.exp(-k * t);
 
             case "tHalf":
                 if (numberOfBoundedVariables == 1) {
@@ -132,7 +127,7 @@ public class Test_solver {
         }
 
         try {
-            return(String.format("Ответ: n = %f, n0 = %f, k = %f, t = %f, t(1/2) = %f", n, n0, k, t, tHalf));
+            return(String.format("Ответ: n = %f, n0 = %f, t = %f, k = %f, t(1/2) = %f", n, n0, t, k, tHalf));
         } catch (Exception e) {
             return "Ответ не найден";
         }
