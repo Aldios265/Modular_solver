@@ -14,8 +14,7 @@ public class Test_solver {
     static int numberOfVariables;
     static String[] boundaryArray = {"k", "tHalf"};
     static ArrayList<String> boundary = new ArrayList<>(Arrays.asList(boundaryArray));
-    static boolean boundaryIsFilled;
-    static boolean doubleBoundaryInitialization;
+    static byte numberOfBoundedVariables;
 
 
     public static void communicator() {
@@ -32,7 +31,7 @@ public class Test_solver {
             } catch (Exception e){
                 toFind = "n";
                 if (boundary.contains(toFind)) {
-                    boundaryIsFilled = true;
+                    numberOfBoundedVariables++;
                 } else {
                     numberOfVariables++;
                 }
@@ -43,7 +42,7 @@ public class Test_solver {
             } catch (Exception e){
                 toFind = "n0";
                 if (boundary.contains(toFind)) {
-                    boundaryIsFilled = true;
+                    numberOfBoundedVariables++;
                 } else {
                     numberOfVariables++;
                 }
@@ -54,11 +53,7 @@ public class Test_solver {
             } catch (Exception e){
                 toFind = "k";
                 if (boundary.contains(toFind)) {
-                    if (boundaryIsFilled) {
-                        doubleBoundaryInitialization = true;
-                    } else {
-                        boundaryIsFilled = true;
-                    }
+                    numberOfBoundedVariables++;
                 } else {
                     numberOfVariables++;
                 }
@@ -68,7 +63,7 @@ public class Test_solver {
             } catch (Exception e){
                 toFind = "t";
                 if (boundary.contains(toFind)) {
-                    boundaryIsFilled = true;
+                    numberOfBoundedVariables++;
                 } else {
                     numberOfVariables++;
                 }
@@ -79,19 +74,13 @@ public class Test_solver {
             } catch (Exception e){
                 toFind = "tHalf";
                 if (boundary.contains(toFind)) {
-                    if (boundaryIsFilled) {
-                        doubleBoundaryInitialization = true;
-                    } else {
-                        boundaryIsFilled = true;
-                    }
+                    numberOfBoundedVariables++;
                 } else {
                     numberOfVariables++;
                 }
             }
-            if (!boundaryIsFilled) {
-                throw new IllegalArgumentException("Невозможно задать одновременно переменные k и t(1/2)");
-            }
-            numberOfVariables = numberOfVariables + (() ? 1 : 0);
+
+
 
         } else {
             throw new IllegalArgumentException("Введено неверное количество параметров");
@@ -114,7 +103,7 @@ public class Test_solver {
                 n0 = n / Math.exp(-k * t);
 
             case "k":
-                if (boundaryIsFilled) {
+                if (numberOfBoundedVariables == 1) {
                     k = Math.log(2) / tHalf;
                 } else {
                     k = (Math.log(n/n0) / t);
@@ -125,7 +114,7 @@ public class Test_solver {
                 n = n0 * Math.exp(-k * t);
 
             case "tHalf":
-                if (boundaryIsFilled) {
+                if (numberOfBoundedVariables == 1) {
                     tHalf = Math.log(2) / k;
                 } else {
                     k = (Math.log(n/n0) / t);
