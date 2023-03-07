@@ -15,6 +15,8 @@ public class Test_solver {
     static String[] boundaryArray = {"k", "tHalf"};
     static ArrayList<String> boundary = new ArrayList<>(Arrays.asList(boundaryArray));
     static boolean boundaryIsFilled;
+    static boolean doubleBoundaryInitialization;
+
 
     public static void communicator() {
         System.out.println("Рассчет реакций первого порядка \n" +
@@ -24,6 +26,7 @@ public class Test_solver {
         String input = scanner.next();
         String[] outputString = input.split(",");
         if (outputString.length == 5) {
+
             try {
                 n = Integer.parseInt(outputString[0]);
             } catch (Exception e){
@@ -34,6 +37,7 @@ public class Test_solver {
                     numberOfVariables++;
                 }
             }
+
             try {
                 n0 = Integer.parseInt(outputString[1]);
             } catch (Exception e){
@@ -44,12 +48,17 @@ public class Test_solver {
                     numberOfVariables++;
                 }
             }
+
             try {
                 k = Integer.parseInt(outputString[2]);
             } catch (Exception e){
                 toFind = "k";
                 if (boundary.contains(toFind)) {
-                    boundaryIsFilled = true;
+                    if (boundaryIsFilled) {
+                        doubleBoundaryInitialization = true;
+                    } else {
+                        boundaryIsFilled = true;
+                    }
                 } else {
                     numberOfVariables++;
                 }
@@ -64,18 +73,25 @@ public class Test_solver {
                     numberOfVariables++;
                 }
             }
+
             try {
                 tHalf = Integer.parseInt(outputString[4]);
             } catch (Exception e){
                 toFind = "tHalf";
                 if (boundary.contains(toFind)) {
-                    boundaryIsFilled = true;
+                    if (boundaryIsFilled) {
+                        doubleBoundaryInitialization = true;
+                    } else {
+                        boundaryIsFilled = true;
+                    }
                 } else {
                     numberOfVariables++;
                 }
             }
-            numberOfVariables = numberOfVariables + ((boundaryIsFilled) ? 1 : 0);
-            System.out.println(numberOfVariables);
+            if (!boundaryIsFilled) {
+                throw new IllegalArgumentException("Невозможно задать одновременно переменные k и t(1/2)");
+            }
+            numberOfVariables = numberOfVariables + (() ? 1 : 0);
 
         } else {
             throw new IllegalArgumentException("Введено неверное количество параметров");
@@ -118,9 +134,9 @@ public class Test_solver {
         }
 
         try {
-            return(String)
+            return(String.format("Ответ: n = %f, n0 = %f, k = %f, t = %f, t(1/2) = %f", n, n0, k, t, tHalf));
         } catch (Exception e) {
-
+            return "Ответ не найден";
         }
 
 
