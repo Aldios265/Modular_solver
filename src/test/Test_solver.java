@@ -16,7 +16,7 @@ public class Test_solver {
 
     static String[] boundaryArray = {"k", "tHalf"};
     static ArrayList<String> boundary = new ArrayList<>(Arrays.asList(boundaryArray));
-    static byte numberOfBoundedUnknowns;
+    static byte numberOfBoundedVariables;
 
 
     public static void communicator() {
@@ -28,77 +28,80 @@ public class Test_solver {
         String[] outputString = input.split(",");
 
         if (outputString.length == 5) {
-
             try {
                 n = Double.parseDouble(outputString[0]);
-            } catch (Exception e){
-                toFind = "n";
                 if (boundary.contains(toFind)) {
-                    numberOfBoundedUnknowns++;
+                    numberOfBoundedVariables++;
                 } else {
                     numberOfVariables++;
+                    System.out.println(0);
                 }
+            } catch (Exception e) {
+                toFind = "n";
             }
 
             try {
                 n0 = Double.parseDouble(outputString[1]);
-            } catch (Exception e){
-                toFind = "n0";
                 if (boundary.contains(toFind)) {
-                    numberOfBoundedUnknowns++;
+                    numberOfBoundedVariables++;
                 } else {
                     numberOfVariables++;
+                    System.out.println(1);
                 }
+            } catch (Exception e){
+                toFind = "n0";
             }
 
             try {
                 k = Double.parseDouble(outputString[2]);
-            } catch (Exception e){
-                toFind = "k";
                 if (boundary.contains(toFind)) {
-                    numberOfBoundedUnknowns++;
+                    numberOfBoundedVariables++;
                 } else {
                     numberOfVariables++;
+                    System.out.println(2);
                 }
+            } catch (Exception e){
+                toFind = "k";
+
             }
             try {
                 t = Double.parseDouble(outputString[3]);
-            } catch (Exception e){
-                toFind = "t";
                 if (boundary.contains(toFind)) {
-                    numberOfBoundedUnknowns++;
+                    numberOfBoundedVariables++;
                 } else {
                     numberOfVariables++;
+                    System.out.println(3);
                 }
+            } catch (Exception e){
+                toFind = "t";
             }
 
             try {
                 tHalf = Double.parseDouble(outputString[4]);
-            } catch (Exception e){
-                toFind = "tHalf";
                 if (boundary.contains(toFind)) {
-                    numberOfBoundedUnknowns++;
+                    numberOfBoundedVariables++;
                 } else {
                     numberOfVariables++;
+                    System.out.println(4);
                 }
+            } catch (Exception e){
+                toFind = "tHalf";
             }
 
         } else {
             throw new IllegalArgumentException("Введено неверное количество параметров");
         }
-        System.out.println(numberOfBoundedUnknowns);
-        System.out.println(numberOfVariables);
-        if (numberOfBoundedUnknowns == 0) {
+
+//        System.out.println(numberOfBoundedVariables);
+//        System.out.println(numberOfVariables);
+        if (numberOfBoundedVariables == 2) {
             throw new IllegalArgumentException("переменные k и t(1/2) не могут быть заданы одновременно");
-        } else if (numberOfVariables + ((numberOfBoundedUnknowns == 1) ? 1 : 0 ) != 4) {
+        } else if (numberOfVariables + ((numberOfBoundedVariables == 1) ? 1 : 0 ) != 4) {
             throw new IllegalArgumentException("Неверное количество неизвестных");
         } else {
             System.out.println(solver());
         }
-
-
     }
-
 
     public static String solver() {
         switch (toFind) {
@@ -109,7 +112,7 @@ public class Test_solver {
                 n0 = n / Math.exp(-k * t);
 
             case "k":
-                if (numberOfBoundedUnknowns == 1) {
+                if (numberOfBoundedVariables == 1) {
                     k = Math.log(2) / tHalf;
                 } else {
                     k = -(Math.log(n/n0) / t);
@@ -120,7 +123,7 @@ public class Test_solver {
                 n = n0 * Math.exp(-k * t);
 
             case "tHalf":
-                if (numberOfBoundedUnknowns == 1) {
+                if (numberOfBoundedVariables == 1) {
                     tHalf = Math.log(2) / k;
                 } else {
                     k = -(Math.log(n/n0) / t);
