@@ -87,9 +87,6 @@ public class Test_solver {
             throw new IllegalArgumentException("Введено неверное количество параметров");
         }
 
-        System.out.println("numberOfBoundedVariables = " + numberOfBoundedVariables);
-        System.out.println("numberOfVariables = " + numberOfVariables);
-
         if (numberOfBoundedVariables == 2) {
             throw new IllegalArgumentException("переменные k и t(1/2) не могут быть заданы одновременно");
         } else if (numberOfVariables + ((numberOfBoundedVariables == 1) ? 1 : 0 ) != 3) {
@@ -133,8 +130,6 @@ public class Test_solver {
         } catch (Exception e) {
             return "Ответ не найден";
         }
-
     }
-
 }
 
