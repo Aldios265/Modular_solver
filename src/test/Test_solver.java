@@ -1,8 +1,10 @@
 package test;
 
+import java.util.Arrays;
 import java.util.Scanner;
-
+import java.util.ArrayList;
 public class Test_solver {
+
     static double n;
     static double n0;
     static double k;
@@ -10,6 +12,10 @@ public class Test_solver {
     static double tHalf;
     static String toFind;
     static int numberOfVariables;
+    static String[] boundaryArray = {"k", "tHalf"};
+    static ArrayList<String> boundary = new ArrayList<>(Arrays.asList(boundaryArray));
+    static boolean boundaryIsFilled;
+
     public static void communicator() {
         System.out.println("Рассчет реакций первого порядка \n" +
                 "Введите значения через запятую: \n" +
@@ -22,46 +28,102 @@ public class Test_solver {
                 n = Integer.parseInt(outputString[0]);
             } catch (Exception e){
                 toFind = "n";
-                numberOfVariables++;
+                if (boundary.contains(toFind)) {
+                    boundaryIsFilled = true;
+                } else {
+                    numberOfVariables++;
+                }
             }
             try {
                 n0 = Integer.parseInt(outputString[1]);
             } catch (Exception e){
                 toFind = "n0";
-                numberOfVariables++;
+                if (boundary.contains(toFind)) {
+                    boundaryIsFilled = true;
+                } else {
+                    numberOfVariables++;
+                }
             }
             try {
                 k = Integer.parseInt(outputString[2]);
             } catch (Exception e){
                 toFind = "k";
-                numberOfVariables++;
+                if (boundary.contains(toFind)) {
+                    boundaryIsFilled = true;
+                } else {
+                    numberOfVariables++;
+                }
             }
             try {
                 t = Integer.parseInt(outputString[3]);
             } catch (Exception e){
                 toFind = "t";
-                numberOfVariables++;
+                if (boundary.contains(toFind)) {
+                    boundaryIsFilled = true;
+                } else {
+                    numberOfVariables++;
+                }
             }
             try {
                 tHalf = Integer.parseInt(outputString[4]);
             } catch (Exception e){
                 toFind = "tHalf";
-                numberOfVariables++;
+                if (boundary.contains(toFind)) {
+                    boundaryIsFilled = true;
+                } else {
+                    numberOfVariables++;
+                }
             }
-
-            System.out.println(toFind);
+            numberOfVariables = numberOfVariables + ((boundaryIsFilled) ? 1 : 0);
+            System.out.println(numberOfVariables);
 
         } else {
             throw new IllegalArgumentException("Введено неверное количество параметров");
         }
-        if (numberOfVariables != 1) {
+        if (numberOfVariables == 1) {
+            System.out.println(solver());
+        } else {
             throw new IllegalArgumentException("Неверное количество неизвестных");
         }
 
 
     }
 
-    public static void solver() {
+    public static String solver() {
+        switch (toFind) {
+            case "n":
+                n = n0 * Math.exp(-k * t);
+
+            case "n0":
+                n0 = n / Math.exp(-k * t);
+
+            case "k":
+                if (boundaryIsFilled) {
+                    k = Math.log(2) / tHalf;
+                } else {
+                    k = (Math.log(n/n0) / t);
+                    tHalf = Math.log(2) / k;
+                }
+
+            case "t":
+                n = n0 * Math.exp(-k * t);
+
+            case "tHalf":
+                if (boundaryIsFilled) {
+                    tHalf = Math.log(2) / k;
+                } else {
+                    k = (Math.log(n/n0) / t);
+                    tHalf = Math.log(2) / k;
+                }
+        }
+
+        try {
+            return(String)
+        } catch (Exception e) {
+
+        }
+
+
 
     }
 
