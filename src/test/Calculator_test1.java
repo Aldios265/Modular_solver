@@ -180,7 +180,7 @@ public class Calculator_test1 {
         }
         return equationCodeArray;
     }
-    /*Куницкий Андрей Владимирович, Химический факультет, 03.08.2023 солнечная погода*/
+    /*Куницкий Андрей Владимирович, Химический факультет, 08.03.2023 солнечная погода*/
 
 /* Комбинация метода getOut и equationCodeDetermine */
     public static int equationFullCodeDetermine(String[] equationArray, String[] generalArray, Object[] objectArray) {
