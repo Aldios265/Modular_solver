@@ -35,6 +35,7 @@ public class Calculator_test1 {
     static String[] equation2 = {"k", "tHalf"};
     final byte equationIdentifier2 = 2;
     /*------------------------------------*/
+    static String[][] multiEquationArray = {{"n", "n0", "t", "k"},{"k", "tHalf"}};
 
 
 
@@ -111,6 +112,19 @@ public class Calculator_test1 {
         return tightObjectArray;
     }
 
+    /*Функция arrayGetOut() является аналогом функции getOut но только вместо шаблона массивов типа [a,b] берет шаблон
+     массивов массивов типа [[a,b],[c,d]] и возвращает не [1,2] а [[1,2],[3,4]]
+     Итого [[1,2],[3,4]]{a,b,c,d} + [[a,b],[c,d]] = [[1,2],[3,4]]
+      [[a,b],[c,d]] - multiEquationArray, {a,b,c,d} - general array
+      данный метод зависим от метода getOut т.к содержит его в себе*/
+    public static Object[][] arrayGetOut(String[][] multiEquationArray, String[] generalArray, Object[] objectArray) {
+        Object[][] multiObjectArray = new Object[multiEquationArray.length][];
+        for (int k = 0; k < multiEquationArray.length; k++) {
+            multiObjectArray[k] = getOut(multiEquationArray[k], generalArray, objectArray);
+        }
+        return multiObjectArray;
+    }
+
 /*Данный метод рассчитывает equationCode массива объектов, если массив содержит все
 * double-ы и только один не double то quationCode = 1, если 2 то 2 и.т.д */
     public static byte equationCodeDetermine(Object[] objectArray) {
@@ -140,8 +154,15 @@ public class Calculator_test1 {
     public static void solverMain() {
         output();
         Object[] objectDoubleArray = toDouble(input(numberOfVariables));
-        System.out.println(Arrays.asList(getOut(equation1, parametersStringArray, objectDoubleArray)));
-        System.out.println(Arrays.asList(getOut(equation2, parametersStringArray, objectDoubleArray)));
+        Object[][] multiArray = arrayGetOut(multiEquationArray, parametersStringArray, objectDoubleArray);
+        for (int i = 0; i < multiArray.length; i++) {
+            System.out.println("-----");
+            for (int k = 0; k < multiArray[i].length; k++) {
+                System.out.println(multiArray[i][k]);
+            }
+        }
+//        System.out.println(Arrays.asList(getOut(equation1, parametersStringArray, objectDoubleArray)));
+//        System.out.println(Arrays.asList(getOut(equation2, parametersStringArray, objectDoubleArray)));
     }
 
 }
