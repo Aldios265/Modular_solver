@@ -180,6 +180,7 @@ public class Calculator_test1 {
         }
         return equationCodeArray;
     }
+    /*Куницкий Андрей Владимирович, Химический факультет, 03.08.2023 солнечная погода*/
 
 /* Комбинация метода getOut и equationCodeDetermine */
     public static int equationFullCodeDetermine(String[] equationArray, String[] generalArray, Object[] objectArray) {
@@ -193,7 +194,10 @@ public class Calculator_test1 {
         }
         return equationCode;
     }
-// Короче... Ну тут да...
+/*Данный метод представляет из себя петлю while, которая выполняется до тех пор, пока все элементы массива equationCodeArray не обнуляться,
+Для в данной петле работает другая петля, которая на каждом цикле петли while проходит по массиву equationCodeArray, созданному в самом начале
+метода, находит в нем единицы и вызывает для соответствующего массива объектов из массива массивов метод solver() из массива объектов
+класса Solver, имплементирующего одноименный интерфейс.*/
     public static Object[][] solverInitiatorLoop(Object[][] multiObjectArray, Solver[] solverArray, String[][] multiEquationArray) {
         Object[][] anwserArray = new Object[multiObjectArray.length][];
         int[] equationCodeArray = arrayEquationCodeDetermine(multiObjectArray);
@@ -202,16 +206,19 @@ public class Calculator_test1 {
                 if (equationCodeArray[i] == 1) {
                     anwserArray[i] = solverArray[i].solver(multiObjectArray[i]);
                 }
-                for (String k : multiEquationArray[i]) {
-                    for (int m = 1; m < multiEquationArray.length; m++) {
-                        for (int n = 0; n < multiEquationArray.length; n++) {
-                            if (k.equals(multiEquationArray[m][n])) {
-                                multiObjectArray[m][n] = k;
+                /*Проверка на наличие одинаковых переменных в других уравнениях для того чтобы их приравнять.
+                 Скорее всего нужно будет написать отдельные метод для этих целей*/
+                for (int k = 1; i < multiEquationArray.length; k++) {
+                    for (int m = 0; m < multiEquationArray.length; m++) {
+                        if (m != k) {
+                            for (int n = 0; n < multiEquationArray.length; n++) {
+                                if (multiEquationArray[k].equals(multiEquationArray[m][n])) {
+                                    multiObjectArray[m][n] = multiObjectArray[k];
+                                }
                             }
                         }
                     }
                 }
-
             }
         }
         return anwserArray;
