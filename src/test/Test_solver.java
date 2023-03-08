@@ -19,7 +19,7 @@ public class Test_solver {
     //массив строчных литералов переменных.
     static String[] parametersStringArray = {"n", "n0", "k", "t", "tHalf"};
     //Количество массив численных литералов переменных.
-    static double[] parametersArray = new double[numberOfVariables];
+    static Object[] parametersArray = new Object[numberOfVariables];
 
     //Переменная toFind1 используется в методе distribution() для выбора ветки рассчета для метода solver().
     static String toFind1;
@@ -82,17 +82,22 @@ public class Test_solver {
     }
     
     
-    public static void distribution1(String[] outputArray) {
+    public static void parse(String[] outputArray) {
         if (outputArray.length == numberOfVariables) {
             for (int i = 0; i < numberOfVariables; i++) {
                 try {
-
+                    parametersArray[i] = Double.parseDouble(outputArray[i]);
                 }
             }
 
         } else {
             throw new IllegalArgumentException("Введено неверное количество параметров");
         }
+    }
+
+    //Метод определяющий quationCode для уравнения
+    public static void equationCodeDetermine() {
+
     }
 
     public static void distribution(String[] outputArray) {
