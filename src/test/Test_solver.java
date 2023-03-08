@@ -73,7 +73,6 @@ public class Test_solver {
                 "n, n0, t, [k, t(1/2)]");
     }
 
-
     public static String[] input() {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.next();
@@ -86,9 +85,9 @@ public class Test_solver {
         if (inputArray.length == numberOfVariables) {
             for (int i = 0; i < numberOfVariables; i++) {
                 try {
-                    parametersArray = Double.parseDouble()
-                } catch {
-                    
+                    parametersArray[i] = Double.parseDouble(inputArray[i]);
+                } catch (Exception e) {
+                    parametersArray[i] = inputArray[i];
                 }
             }
         } else {
@@ -97,20 +96,20 @@ public class Test_solver {
     }
 
     //Метод определяющий quationCode для соответствующего уравнения. Количество циклов for равно количеству уравнений.
-    public static void equationCodeDetermine() {
-        for (int i = 0; i < totalArray.length; i++) {
-            if (!((Object) objectArray[i].getClass().getName() == "java.lang.Double")
-                    && (equation1ArrayList.contains(totalArrayList.get(i)))) {
-                equationCode1++;
-            }
-        }
-        for (int i = 0; i < totalArray.length; i++) {
-            if (!((Object) objectArray[i].getClass().getName() == "java.lang.Double")
-                    && (equation1ArrayList.contains(totalArrayList.get(i)))) {
-                equationCode1++;
-            }
-        }
-    }
+//    public static void equationCodeDetermine() {
+//        for (int i = 0; i < totalArray.length; i++) {
+//            if (!((Object) objectArray[i].getClass().getName() == "java.lang.Double")
+//                    && (equation1ArrayList.contains(totalArrayList.get(i)))) {
+//                equationCode1++;
+//            }
+//        }
+//        for (int i = 0; i < totalArray.length; i++) {
+//            if (!((Object) objectArray[i].getClass().getName() == "java.lang.Double")
+//                    && (equation1ArrayList.contains(totalArrayList.get(i)))) {
+//                equationCode1++;
+//            }
+//        }
+//    }
 
     public static void distribution(String[] inputArray) {
         if (inputArray.length == 5) {
