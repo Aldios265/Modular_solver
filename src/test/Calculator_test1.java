@@ -43,6 +43,31 @@ public class Calculator_test1 {
     static byte[] equationCodeArray = new byte[2];
 
 
+    /*Классы solver-ов*/
+    /*Классы solver-ов*/
+    /*Классы solver-ов*/
+    public class Solver1Class {
+        static Object[] solver(Object[] objectDoubleArray) {
+
+            return new Object[]{10,10,10,10};
+        }
+    }
+
+    public class Solver2Class {
+        static Object[] solver(Object[] objectDoubleArray) {
+
+            return new Object[]{10,10};
+        }
+    }
+    /*Классы solver-ов*/
+    /*Классы solver-ов*/
+    /*Классы solver-ов*/
+
+    Solver1Class solver1 = new Solver1Class();
+    Solver2Class solver2 = new Solver2Class();
+
+    Object[] solverArray = {solver1, solver2};
+
 
     /*Массивы литералов используются для выбора втки рассчета для метода solver().
     Пользователь вводит значения параметров в методе input(), вместо значений, которые необходимо найти по условию задачи
@@ -167,14 +192,15 @@ public class Calculator_test1 {
     public static void solverMain() {
         output();
         Object[] objectDoubleArray = toDouble(input(numberOfVariables));
-        byte[] byteArray = arrayEquationCodeDetermine(arrayGetOut(multiEquationArray, parametersStringArray, toDouble(input(numberOfVariables))));
+        Object[][] multiArray = arrayGetOut(multiEquationArray, parametersStringArray, objectDoubleArray);
+        byte[] byteArray = arrayEquationCodeDetermine(multiArray);
         for (byte i : byteArray) {
             System.out.println(i);
         }
 
 
 
-//        Object[][] multiArray = arrayGetOut(multiEquationArray, parametersStringArray, objectDoubleArray);
+
 //        for (int i = 0; i < multiArray.length; i++) {
 //            System.out.println("-----");
 //            for (int k = 0; k < multiArray[i].length; k++) {
