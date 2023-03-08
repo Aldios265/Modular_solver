@@ -49,12 +49,6 @@ public class Test_solver1 {
      */
 
 
-    //Перевод массива в ArrayList<> для использования метода .contains() в методе distribution().
-    static ArrayList<String> equation1List = new ArrayList<>(Arrays.asList(equation1));
-    static ArrayList<String> equation2List = new ArrayList<>(Arrays.asList(equation2));
-
-
-
     public static void output() {
         System.out.println("Рассчет реакций первого порядка \n" +
                 "Введите значения через запятую: \n" +
@@ -69,22 +63,23 @@ public class Test_solver1 {
     }
 
 
-    /* метод parce() парсит строку, введенную пользователем и преобразует ее в массив объектов. Объекты,
+    /* метод parce() парсит массив строк, который возвращает input() и преобразует его в массив объектов. Объекты,
     преобразующиеся в double метод записывает в массив как double datatype, остальные оставляет такими какие они есть */
 
-    public static Object[] parse(String[] inputArray, Object[] parametersArray, byte numberOfVariables) {
-        if (inputArray.length == numberOfVariables) {
+    public static Object[] parse(String[] initialArray) {
+        Object[] objectDoubleArray = new Object[initialArray.length];
+        if (initialArray.length == numberOfVariables) {
             for (int i = 0; i < numberOfVariables; i++) {
                 try {
-                    parametersArray[i] = Double.parseDouble(inputArray[i]);
+                    objectDoubleArray[i] = Double.parseDouble(initialArray[i]);
                 } catch (Exception e) {
-                    parametersArray[i] = inputArray[i];
+                    objectDoubleArray[i] = initialArray[i];
                 }
             }
         } else {
             throw new IllegalArgumentException("Введено неверное количество параметров");
         }
-        return parametersArray;
+        return objectDoubleArray;
     }
 
 
@@ -103,9 +98,9 @@ public class Test_solver1 {
 
     public static void solverMain() {
         output();
-        parse(input(), parametersArray, numberOfVariables);
-        System.out.println(equationCodeDetermine1(equation1, parametersStringArray, parametersArray));
-        System.out.println(equationCodeDetermine1(equation2, parametersStringArray, parametersArray));
+        Object[] objectDoubleArray = parse(input());
+        System.out.println(equationCodeDetermine1(equation1, parametersStringArray, objectDoubleArray));
+        System.out.println(equationCodeDetermine1(equation2, parametersStringArray, objectDoubleArray));
     }
 
 }
