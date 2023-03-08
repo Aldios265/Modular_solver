@@ -95,17 +95,17 @@ public class Test_solver {
         }
     }
 
-    //Метод определяющий quationCode для соответствующего уравнения. Количество циклов for равно количеству уравнений.
+//    Метод определяющий quationCode для соответствующего уравнения. Количество циклов for равно количеству уравнений.
 //    public static void equationCodeDetermine() {
-//        for (int i = 0; i < totalArray.length; i++) {
-//            if (!((Object) objectArray[i].getClass().getName() == "java.lang.Double")
-//                    && (equation1ArrayList.contains(totalArrayList.get(i)))) {
+//        for (int i = 0; i < parametersStringArray.length; i++) {
+//            if (!((Object) parametersArray[i].getClass().getName() == "java.lang.Double")
+//                    && (equation1.contains(parametersStringArray[]))) {
 //                equationCode1++;
 //            }
 //        }
-//        for (int i = 0; i < totalArray.length; i++) {
-//            if (!((Object) objectArray[i].getClass().getName() == "java.lang.Double")
-//                    && (equation1ArrayList.contains(totalArrayList.get(i)))) {
+//        for (int i = 0; i < parametersStringArray.length; i++) {
+//            if (!((Object) parametersArray[i].getClass().getName() == "java.lang.Double")
+//                    && (equation1.contains(parametersStringArray[]))) {
 //                equationCode1++;
 //            }
 //        }

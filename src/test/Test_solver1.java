@@ -17,7 +17,7 @@ public class Test_solver1 {
     static byte numberOfVariables = 5;
 
     //массив строчных литералов переменных.
-    static String[] parametersStringArray = {"n", "n0", "k", "t", "tHalf"};
+    static String[] parametersStringArray = {"n", "n0", "t", "k", "tHalf"};
     //Количество массив численных литералов переменных.
     static Object[] parametersArray = new Object[numberOfVariables];
 
@@ -26,8 +26,8 @@ public class Test_solver1 {
     static String toFind2;
 
     //Переменная equationCode имеет стандартное значение 0, значения соответствуют описанным ниже случаям.
-    static byte equation1Code;
-    static byte equation2Code;
+    static byte equationCode1 = 0;
+    static byte equationCode2 = 0;
 
     //Массивы литералов главных переменных по уравнениям.
     static String[] equation1 = {"n", "n0", "t", "k"};
@@ -53,9 +53,6 @@ public class Test_solver1 {
     static ArrayList<String> equation1List = new ArrayList<>(Arrays.asList(equation1));
     static ArrayList<String> equation2List = new ArrayList<>(Arrays.asList(equation2));
 
-
-    static String[] argumentsArray = {"n", "n0", "t", "boundary1"};
-    static String[] boundary11Array = {"k", "tHalf"};
 
 
     public static void output() {
@@ -85,10 +82,27 @@ public class Test_solver1 {
         }
     }
 
+    public static void equationCodeDetermine() {
+        for (int i = 0; i < parametersStringArray.length; i++) {
+            if (!((Object) parametersArray[i].getClass().getName() == "java.lang.Double")
+                    && (equation1List.contains(parametersStringArray[i]))) {
+                equationCode1++;
+            }
+        }
+        for (int i = 0; i < parametersStringArray.length; i++) {
+            if (!((Object) parametersArray[i].getClass().getName() == "java.lang.Double")
+                    && (equation2List.contains(parametersStringArray[i]))) {
+                equationCode2++;
+            }
+        }
+    }
+
     public static void solverMain() {
         output();
         parse(input());
-
+        equationCodeDetermine();
+        System.out.println(equationCode1);
+        System.out.println(equationCode2);
     }
 
 }
