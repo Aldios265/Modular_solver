@@ -68,7 +68,11 @@ public class Test_solver1 {
         return inputArray;
     }
 
-    public static void parse(String[] inputArray) {
+
+    /* метод parce() парсит строку, введенную пользователем и преобразует ее в массив объектов. Объекты,
+    преобразующиеся в double метод записывает в массив как double datatype, остальные оставляет такими какие они есть */
+
+    public static Object[] parse(String[] inputArray, Object[] parametersArray, byte numberOfVariables) {
         if (inputArray.length == numberOfVariables) {
             for (int i = 0; i < numberOfVariables; i++) {
                 try {
@@ -80,29 +84,28 @@ public class Test_solver1 {
         } else {
             throw new IllegalArgumentException("Введено неверное количество параметров");
         }
+        return parametersArray;
     }
 
-    public static void equationCodeDetermine() {
+
+    public static byte equationCodeDetermine1(String[] equation, String[] parametersStringArray, Object[] parametersArray) {
+        byte equationCode = 0;
+        ArrayList<String> equationList = new ArrayList<>(Arrays.asList(equation));
         for (int i = 0; i < parametersStringArray.length; i++) {
             if (!((Object) parametersArray[i].getClass().getName() == "java.lang.Double")
-                    && (equation1List.contains(parametersStringArray[i]))) {
-                equationCode1++;
+                    && (equationList.contains(parametersStringArray[i]))) {
+                equationCode++;
             }
         }
-        for (int i = 0; i < parametersStringArray.length; i++) {
-            if (!((Object) parametersArray[i].getClass().getName() == "java.lang.Double")
-                    && (equation2List.contains(parametersStringArray[i]))) {
-                equationCode2++;
-            }
-        }
+        return equationCode;
     }
+
 
     public static void solverMain() {
         output();
-        parse(input());
-        equationCodeDetermine();
-        System.out.println(equationCode1);
-        System.out.println(equationCode2);
+        parse(input(), parametersArray, numberOfVariables);
+        System.out.println(equationCodeDetermine1(equation1, parametersStringArray, parametersArray));
+        System.out.println(equationCodeDetermine1(equation2, parametersStringArray, parametersArray));
     }
 
 }
