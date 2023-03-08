@@ -35,7 +35,12 @@ public class Calculator_test1 {
     static String[] equation2 = {"k", "tHalf"};
     final byte equationIdentifier2 = 2;
     /*------------------------------------*/
+    //Массив equation-ов
     static String[][] multiEquationArray = {{"n", "n0", "t", "k"},{"k", "tHalf"}};
+    //Массив порядковых номеров уравнений.
+    static byte[] equationIndexArray = {0,1};
+    //Массив equationCode-ов
+    static byte[] equationCodeArray = new byte[2];
 
 
 
@@ -137,6 +142,14 @@ public class Calculator_test1 {
         return equationCode;
     }
 
+    public static byte[] arrayEquationCodeDetermine(Object[][] multiObjectArray) {
+        byte[] equationCodeArray = new byte[multiObjectArray.length];
+        for (int i = 0; i < multiObjectArray.length; i++) {
+            equationCodeArray[i] = equationCodeDetermine(multiObjectArray[i]);
+        }
+        return equationCodeArray;
+    }
+
 /* Комбинация метода getOut и equationCodeDetermine */
     public static byte equationFullCodeDetermine(String[] equationArray, String[] generalArray, Object[] objectArray) {
         byte equationCode = 0;
@@ -154,15 +167,22 @@ public class Calculator_test1 {
     public static void solverMain() {
         output();
         Object[] objectDoubleArray = toDouble(input(numberOfVariables));
-        Object[][] multiArray = arrayGetOut(multiEquationArray, parametersStringArray, objectDoubleArray);
-        for (int i = 0; i < multiArray.length; i++) {
-            System.out.println("-----");
-            for (int k = 0; k < multiArray[i].length; k++) {
-                System.out.println(multiArray[i][k]);
-            }
+        byte[] byteArray = arrayEquationCodeDetermine(arrayGetOut(multiEquationArray, parametersStringArray, toDouble(input(numberOfVariables))));
+        for (byte i : byteArray) {
+            System.out.println(i);
+        }
+
+
+
+//        Object[][] multiArray = arrayGetOut(multiEquationArray, parametersStringArray, objectDoubleArray);
+//        for (int i = 0; i < multiArray.length; i++) {
+//            System.out.println("-----");
+//            for (int k = 0; k < multiArray[i].length; k++) {
+//                System.out.println(multiArray[i][k]);
+//            }
         }
 //        System.out.println(Arrays.asList(getOut(equation1, parametersStringArray, objectDoubleArray)));
 //        System.out.println(Arrays.asList(getOut(equation2, parametersStringArray, objectDoubleArray)));
     }
 
-}
+
