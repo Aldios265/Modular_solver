@@ -77,33 +77,45 @@ public class Test_solver {
     public static String[] input() {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.next();
-        String[] outputArray = input.split(",");
-        return outputArray;
+        String[] inputArray = input.split(",");
+        return inputArray;
     }
     
     
-    public static void parse(String[] outputArray) {
-        if (outputArray.length == numberOfVariables) {
+    public static void parse(String[] inputArray) {
+        if (inputArray.length == numberOfVariables) {
             for (int i = 0; i < numberOfVariables; i++) {
                 try {
-                    parametersArray[i] = Double.parseDouble(outputArray[i]);
+                    parametersArray = Double.parseDouble()
+                } catch {
+                    
                 }
             }
-
         } else {
             throw new IllegalArgumentException("Введено неверное количество параметров");
         }
     }
 
-    //Метод определяющий quationCode для уравнения
+    //Метод определяющий quationCode для соответствующего уравнения. Количество циклов for равно количеству уравнений.
     public static void equationCodeDetermine() {
-
+        for (int i = 0; i < totalArray.length; i++) {
+            if (!((Object) objectArray[i].getClass().getName() == "java.lang.Double")
+                    && (equation1ArrayList.contains(totalArrayList.get(i)))) {
+                equationCode1++;
+            }
+        }
+        for (int i = 0; i < totalArray.length; i++) {
+            if (!((Object) objectArray[i].getClass().getName() == "java.lang.Double")
+                    && (equation1ArrayList.contains(totalArrayList.get(i)))) {
+                equationCode1++;
+            }
+        }
     }
 
-    public static void distribution(String[] outputArray) {
-        if (outputArray.length == 5) {
+    public static void distribution(String[] inputArray) {
+        if (inputArray.length == 5) {
             try {
-                n = Double.parseDouble(outputArray[0]);
+                n = Double.parseDouble(inputArray[0]);
                 if (boundary1.contains("n")) {
                     numberOfArgumentsBoundary1++;
                 } else {
@@ -114,7 +126,7 @@ public class Test_solver {
             }
 
             try {
-                n0 = Double.parseDouble(outputArray[1]);
+                n0 = Double.parseDouble(inputArray[1]);
                 if (boundary1.contains("n0")) {
                     numberOfArgumentsBoundary1++;
                 } else {
@@ -125,7 +137,7 @@ public class Test_solver {
             }
 
             try {
-                t = Double.parseDouble(outputArray[2]);
+                t = Double.parseDouble(inputArray[2]);
                 if (boundary1.contains("t")) {
                     numberOfArgumentsBoundary1++;
                 } else {
@@ -136,7 +148,7 @@ public class Test_solver {
 
             }
             try {
-                k = Double.parseDouble(outputArray[3]);
+                k = Double.parseDouble(inputArray[3]);
                 if (boundary1.contains("k")) {
                     numberOfArgumentsBoundary1++;
                 } else {
@@ -147,7 +159,7 @@ public class Test_solver {
             }
 
             try {
-                tHalf = Double.parseDouble(outputArray[4]);
+                tHalf = Double.parseDouble(inputArray[4]);
                 if (boundary1.contains("tHalf")) {
                     numberOfArgumentsBoundary1++;
                 } else {
