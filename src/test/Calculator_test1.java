@@ -25,8 +25,8 @@ public class Calculator_test1 {
     //Переменная toFind1 используется в методе distribution() для выбора ветки рассчета для метода solver().
 
     //Переменная equationCode имеет стандартное значение 0, значения соответствуют описанным ниже случаям.
-    static byte equationCode1 = 0;
-    static byte equationCode2 = 0;
+    static int equationCode1 = 0;
+    static int equationCode2 = 0;
 
     /*Массивы литералов главных переменных по уравнениям*/
     /*--Для написания нового калькулятора--*/
@@ -158,8 +158,8 @@ public class Calculator_test1 {
 
 /*Данный метод рассчитывает equationCode массива объектов, если массив содержит все
 * double-ы и только один не double то quationCode = 1, если 2 то 2 и.т.д */
-    public static byte equationCodeDetermine(Object[] objectArray) {
-        byte equationCode = 0;
+    public static int equationCodeDetermine(Object[] objectArray) {
+        int equationCode = 0;
         for (int i = 0; i < objectArray.length; i++) {
             if (!((Object) objectArray[i].getClass().getName() == "java.lang.Double")) {
                 equationCode++;
@@ -168,8 +168,8 @@ public class Calculator_test1 {
         return equationCode;
     }
 
-    public static byte[] arrayEquationCodeDetermine(Object[][] multiObjectArray) {
-        byte[] equationCodeArray = new byte[multiObjectArray.length];
+    public static int[] arrayEquationCodeDetermine(Object[][] multiObjectArray) {
+        int[] equationCodeArray = new int[multiObjectArray.length];
         for (int i = 0; i < multiObjectArray.length; i++) {
             equationCodeArray[i] = equationCodeDetermine(multiObjectArray[i]);
         }
@@ -177,8 +177,8 @@ public class Calculator_test1 {
     }
 
 /* Комбинация метода getOut и equationCodeDetermine */
-    public static byte equationFullCodeDetermine(String[] equationArray, String[] generalArray, Object[] objectArray) {
-        byte equationCode = 0;
+    public static int equationFullCodeDetermine(String[] equationArray, String[] generalArray, Object[] objectArray) {
+        int equationCode = 0;
         ArrayList<String> equationList = new ArrayList<>(Arrays.asList(equationArray));
         for (int i = 0; i < generalArray.length; i++) {
             if (!((Object) objectArray[i].getClass().getName() == "java.lang.Double")
@@ -189,7 +189,7 @@ public class Calculator_test1 {
         return equationCode;
     }
 
-    public static Object[][] solverInitiatorLoop(Object[][] multiObjectArray1, byte[] equationIndexArray, byte[] equationCodeArray, Object[] solverArray1) {
+    public static Object[][] solverInitiatorLoop(Object[][] multiObjectArray1, byte[] equationIndexArray, int[] equationCodeArray, Object[] solverArray1) {
         while (IntStream.of(equationCodeArray).sum() != 0) {
 
         }
@@ -199,8 +199,8 @@ public class Calculator_test1 {
         output();
         Object[] objectDoubleArray = toDouble(input(numberOfVariables));
         Object[][] multiArray = arrayGetOut(multiEquationArray, parametersStringArray, objectDoubleArray);
-        byte[] byteArray = arrayEquationCodeDetermine(multiArray);
-        for (byte i : byteArray) {
+        int[] byteArray = arrayEquationCodeDetermine(multiArray);
+        for (int i : byteArray) {
             System.out.println(i);
         }
 
