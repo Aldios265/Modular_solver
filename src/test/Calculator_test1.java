@@ -3,6 +3,7 @@ package test;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 public class Calculator_test1 {
 
@@ -188,6 +189,11 @@ public class Calculator_test1 {
         return equationCode;
     }
 
+    public static Object[][] solverInitiatorLoop(Object[][] multiObjectArray1, byte[] equationIndexArray, byte[] equationCodeArray, Object[] solverArray1) {
+        while (IntStream.of(equationCodeArray).sum() != 0) {
+
+        }
+    }
 
     public static void solverMain() {
         output();
@@ -197,6 +203,8 @@ public class Calculator_test1 {
         for (byte i : byteArray) {
             System.out.println(i);
         }
+
+
 
 
 
