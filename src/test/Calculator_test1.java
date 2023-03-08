@@ -47,15 +47,19 @@ public class Calculator_test1 {
     /*Классы solver-ов*/
     /*Классы solver-ов*/
     /*Классы solver-ов*/
-    public class Solver1Class {
-        static Object[] solver(Object[] objectDoubleArray) {
+    public interface Solver {
+        public Object[] solver(Object[] objectDoubleArray);
+    }
+
+    public class Solver1Class implements Solver{
+        public Object[] solver(Object[] objectDoubleArray) {
 
             return new Object[]{10,10,10,10};
         }
     }
 
-    public class Solver2Class {
-        static Object[] solver(Object[] objectDoubleArray) {
+    public class Solver2Class implements Solver{
+        public Object[] solver(Object[] objectDoubleArray) {
 
             return new Object[]{10,10};
         }
@@ -67,7 +71,8 @@ public class Calculator_test1 {
     Solver1Class solver1 = new Solver1Class();
     Solver2Class solver2 = new Solver2Class();
 
-    Object[] solverArray = {solver1, solver2};
+    Solver[] solverArray = {solver1, solver2};
+    ArrayList<Solver> solverArrayList = new ArrayList<>(Arrays.asList(solverArray));
 
 
     /*Массивы литералов используются для выбора втки рассчета для метода solver().
@@ -188,11 +193,28 @@ public class Calculator_test1 {
         }
         return equationCode;
     }
-
-    public static Object[][] solverInitiatorLoop(Object[][] multiObjectArray1, byte[] equationIndexArray, int[] equationCodeArray, Object[] solverArray1) {
+// Короче... Ну тут да...
+    public static Object[][] solverInitiatorLoop(Object[][] multiObjectArray, Solver[] solverArray, String[][] multiEquationArray) {
+        Object[][] anwserArray = new Object[multiObjectArray.length][];
+        int[] equationCodeArray = arrayEquationCodeDetermine(multiObjectArray);
         while (IntStream.of(equationCodeArray).sum() != 0) {
+            for (int i = 0; i < multiObjectArray.length; i++) {
+                if (equationCodeArray[i] == 1) {
+                    anwserArray[i] = solverArray[i].solver(multiObjectArray[i]);
+                }
+                for (String k : multiEquationArray[i]) {
+                    for (int m = 1; m < multiEquationArray.length; m++) {
+                        for (int n = 0; n < multiEquationArray.length; n++) {
+                            if (k.equals(multiEquationArray[m][n])) {
+                                multiObjectArray[m][n] = k;
+                            }
+                        }
+                    }
+                }
 
+            }
         }
+        return anwserArray;
     }
 
     public static void solverMain() {
