@@ -33,7 +33,7 @@ public class Test_solver1 {
     static String[] equation1 = {"n", "n0", "t", "k"};
     static String[] equation2 = {"k", "tHalf"};
 
-    /*Массивы литералов используются в методе distribution() для выбора втки рассчета для метода solver().
+    /*Массивы литералов используются для выбора втки рассчета для метода solver().
     Пользователь вводит значения параметров в методе input(), вместо значений, которые необходимо найти по условию задачи
     пользователь ставит знак "-" либо другой знак, который будет при действии на него метода Double.toDoubleDouble()
     вызывать ошибку, и перенаправлять try - catch выражение на блок catch. Пример инпута пользователя: 2,3.4,-,2,-
@@ -57,7 +57,7 @@ public class Test_solver1 {
 
     /*метод input() преобразует строку, введенную пользователем в массив строк, разделенных запятой
     а также проводит валидацию строки, длинна строки должна соответствовать аргументу функции*/
-    public static String[] input() {
+    public static String[] input(byte numberOfVariables) {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.next();
         String[] inputArray = input.split(",");
@@ -74,7 +74,6 @@ public class Test_solver1 {
 
     public static Object[] toDouble(String[] initialArray) {
         Object[] objectDoubleArray = new Object[initialArray.length];
-
             for (int i = 0; i < numberOfVariables; i++) {
                 try {
                     objectDoubleArray[i] = Double.parseDouble(initialArray[i]);
@@ -101,7 +100,7 @@ public class Test_solver1 {
 
     public static void solverMain() {
         output();
-        Object[] objectDoubleArray = toDouble(input());
+        Object[] objectDoubleArray = toDouble(input(numberOfVariables));
         System.out.println(equationCodeDetermine1(equation1, parametersStringArray, objectDoubleArray));
         System.out.println(equationCodeDetermine1(equation2, parametersStringArray, objectDoubleArray));
     }
