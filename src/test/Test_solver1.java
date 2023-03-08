@@ -35,7 +35,7 @@ public class Test_solver1 {
 
     /*Массивы литералов используются в методе distribution() для выбора втки рассчета для метода solver().
     Пользователь вводит значения параметров в методе input(), вместо значений, которые необходимо найти по условию задачи
-    пользователь ставит знак "-" либо другой знак, который будет при действии на него метода Double.parceDouble()
+    пользователь ставит знак "-" либо другой знак, который будет при действии на него метода Double.toDoubleDouble()
     вызывать ошибку, и перенаправлять try - catch выражение на блок catch. Пример инпута пользователя: 2,3.4,-,2,-
     В зависимости от того, какие переменные пользователь введет можно выделить несколько случаев:
     equationCode = 0) Вс значения данного уравнения известны. Если они известны сразу после ввода значений пользователем
@@ -55,20 +55,26 @@ public class Test_solver1 {
                 "n, n0, t, [k, t(1/2)]");
     }
 
+    /*метод input() преобразует строку, введенную пользователем в массив строк, разделенных запятой
+    а также проводит валидацию строки, длинна строки должна соответствовать аргументу функции*/
     public static String[] input() {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.next();
         String[] inputArray = input.split(",");
-        return inputArray;
+        if (inputArray.length == numberOfVariables) {
+            return inputArray;
+        } else {
+            throw new IllegalArgumentException("Введено неверное количество параметров");
+        }
     }
 
 
-    /* метод parce() парсит массив строк, который возвращает input() и преобразует его в массив объектов. Объекты,
-    преобразующиеся в double метод записывает в массив как double datatype, остальные оставляет такими какие они есть */
+    /* метод toDouble() преобразует массив строк в массив объектов. Объекты,
+    преобразующиеся в double с момощью Double.parceDouble() метод записывает в массив как double datatype, остальные оставляет такими какие они есть */
 
-    public static Object[] parse(String[] initialArray) {
+    public static Object[] toDouble(String[] initialArray) {
         Object[] objectDoubleArray = new Object[initialArray.length];
-        if (initialArray.length == numberOfVariables) {
+
             for (int i = 0; i < numberOfVariables; i++) {
                 try {
                     objectDoubleArray[i] = Double.parseDouble(initialArray[i]);
@@ -76,9 +82,6 @@ public class Test_solver1 {
                     objectDoubleArray[i] = initialArray[i];
                 }
             }
-        } else {
-            throw new IllegalArgumentException("Введено неверное количество параметров");
-        }
         return objectDoubleArray;
     }
 
@@ -98,7 +101,7 @@ public class Test_solver1 {
 
     public static void solverMain() {
         output();
-        Object[] objectDoubleArray = parse(input());
+        Object[] objectDoubleArray = toDouble(input());
         System.out.println(equationCodeDetermine1(equation1, parametersStringArray, objectDoubleArray));
         System.out.println(equationCodeDetermine1(equation2, parametersStringArray, objectDoubleArray));
     }
