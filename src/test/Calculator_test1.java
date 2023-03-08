@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Test_solver1 {
+public class Calculator_test1 {
 
     //Главные переменные данного класа, используются в методе solver() для рассчета резульатата.
     static double n;
@@ -69,7 +69,7 @@ public class Test_solver1 {
     }
 
 
-    /* метод toDouble() преобразует массив строк в массив объектов. Объекты,
+    /* Метод toDouble() преобразует массив строк в массив объектов. Объекты,
     преобразующиеся в double с момощью Double.parceDouble() метод записывает в массив как double datatype, остальные оставляет такими какие они есть */
 
     public static Object[] toDouble(String[] initialArray) {
@@ -84,13 +84,14 @@ public class Test_solver1 {
         return objectDoubleArray;
     }
 
-
-    public static byte equationCodeDetermine1(String[] equation, String[] parametersStringArray, Object[] parametersArray) {
+/* метод equationCodeDetermine() рассчитывает и возвращает equationCode данного уравнения, в качестве параметров он берет
+ основной массив строк основных переменных, */
+    public static byte equationCodeDetermine(String[] equationArray, String[] generalArray, Object[] objectArray) {
         byte equationCode = 0;
-        ArrayList<String> equationList = new ArrayList<>(Arrays.asList(equation));
-        for (int i = 0; i < parametersStringArray.length; i++) {
-            if (!((Object) parametersArray[i].getClass().getName() == "java.lang.Double")
-                    && (equationList.contains(parametersStringArray[i]))) {
+        ArrayList<String> equationList = new ArrayList<>(Arrays.asList(equationArray));
+        for (int i = 0; i < generalArray.length; i++) {
+            if (!((Object) objectArray[i].getClass().getName() == "java.lang.Double")
+                    && (equationList.contains(generalArray[i]))) {
                 equationCode++;
             }
         }
@@ -101,8 +102,8 @@ public class Test_solver1 {
     public static void solverMain() {
         output();
         Object[] objectDoubleArray = toDouble(input(numberOfVariables));
-        System.out.println(equationCodeDetermine1(equation1, parametersStringArray, objectDoubleArray));
-        System.out.println(equationCodeDetermine1(equation2, parametersStringArray, objectDoubleArray));
+        System.out.println(equationCodeDetermine(equation1, parametersStringArray, objectDoubleArray));
+        System.out.println(equationCodeDetermine(equation2, parametersStringArray, objectDoubleArray));
     }
 
 }

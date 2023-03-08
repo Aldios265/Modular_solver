@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Test_solver {
+public class Calculator_test0 {
 
     //Главные переменные данного класа, используются в методе solver() для рассчета резульатата.
     static double n;
