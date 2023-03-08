@@ -22,16 +22,21 @@ public class Calculator_test1 {
     static Object[] parametersArray = new Object[numberOfVariables];
 
     //Переменная toFind1 используется в методе distribution() для выбора ветки рассчета для метода solver().
-    static String toFind1;
-    static String toFind2;
 
     //Переменная equationCode имеет стандартное значение 0, значения соответствуют описанным ниже случаям.
     static byte equationCode1 = 0;
     static byte equationCode2 = 0;
 
-    //Массивы литералов главных переменных по уравнениям.
+    /*Массивы литералов главных переменных по уравнениям*/
+    /*--Для написания нового калькулятора--*/
     static String[] equation1 = {"n", "n0", "t", "k"};
+    final byte equationIdentifier1 = 1;
+    /*------------------------------------*/
     static String[] equation2 = {"k", "tHalf"};
+    final byte equationIdentifier2 = 2;
+    /*------------------------------------*/
+
+
 
     /*Массивы литералов используются для выбора втки рассчета для метода solver().
     Пользователь вводит значения параметров в методе input(), вместо значений, которые необходимо найти по условию задачи
@@ -46,6 +51,8 @@ public class Calculator_test1 {
     equationCode = 3) ... кроме 3.
     ...
     equationCode = n) ... кроме n.
+
+
      */
 
 
@@ -68,6 +75,8 @@ public class Calculator_test1 {
         }
     }
 
+    /*Для проверки подлинности: Автор - Куницкий Андрей Владимирович, химический факультет.*/
+
 
     /* Метод toDouble() преобразует массив строк в массив объектов. Объекты,
     преобразующиеся в double с момощью Double.parceDouble() метод записывает в массив как double datatype, остальные оставляет такими какие они есть */
@@ -84,9 +93,38 @@ public class Calculator_test1 {
         return objectDoubleArray;
     }
 
-/* метод equationCodeDetermine() рассчитывает и возвращает equationCode данного уравнения, в качестве параметров он берет
- основной массив строк основных переменных, */
-    public static byte equationCodeDetermine(String[] equationArray, String[] generalArray, Object[] objectArray) {
+
+/*Метод getOut преобразует массив объектов в сокращенный массив объектов соответствующий
+заданным массиву строк и массиву соответствующей сокращенной строки(накладывает маску)
+[1234]{abcd} + {bd} = [2,4], {bd} - equation array, {abcd} - general array*/
+    public static Object[] getOut(String[] equationArray, String[] generalArray, Object[] objectArray) {
+        Object[] tightObjectArray = new Object[equationArray.length];
+        // счетчик для tightObjectArray;
+        byte k = 0;
+        ArrayList<String> equationList = new ArrayList<>(Arrays.asList(equationArray));
+        for (int i = 0; i < generalArray.length; i++) {
+            if (equationList.contains(generalArray[i])) {
+                tightObjectArray[k] = objectArray[i];
+                k++;
+            }
+        }
+        return tightObjectArray;
+    }
+
+/*Данный метод рассчитывает equationCode массива объектов, если массив содержит все
+* double-ы и только один не double то quationCode = 1, если 2 то 2 и.т.д */
+    public static byte equationCodeDetermine(Object[] objectArray) {
+        byte equationCode = 0;
+        for (int i = 0; i < objectArray.length; i++) {
+            if (!((Object) objectArray[i].getClass().getName() == "java.lang.Double")) {
+                equationCode++;
+            }
+        }
+        return equationCode;
+    }
+
+/* Комбинация метода getOut и equationCodeDetermine */
+    public static byte equationFullCodeDetermine(String[] equationArray, String[] generalArray, Object[] objectArray) {
         byte equationCode = 0;
         ArrayList<String> equationList = new ArrayList<>(Arrays.asList(equationArray));
         for (int i = 0; i < generalArray.length; i++) {
@@ -102,8 +140,8 @@ public class Calculator_test1 {
     public static void solverMain() {
         output();
         Object[] objectDoubleArray = toDouble(input(numberOfVariables));
-        System.out.println(equationCodeDetermine(equation1, parametersStringArray, objectDoubleArray));
-        System.out.println(equationCodeDetermine(equation2, parametersStringArray, objectDoubleArray));
+        System.out.println(Arrays.asList(getOut(equation1, parametersStringArray, objectDoubleArray)));
+        System.out.println(Arrays.asList(getOut(equation2, parametersStringArray, objectDoubleArray)));
     }
 
 }
