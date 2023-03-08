@@ -12,14 +12,42 @@ public class Test_solver {
     static double k;
     static double t;
     static double tHalf;
+    
+    //Общее количчество переменных.
+    static byte numberOfVariables = 5;
 
-    //Переменная toFind используется в методе distribution() для выбора ветки рассчета для метода solver().
-    static String toFind;
+    //массив строчных литералов переменных.
+    static String[] parametersStringArray = {"n", "n0", "k", "t", "tHalf"};
+    //Количество массив численных литералов переменных.
+    static double[] parametersArray = new double[numberOfVariables];
+
+    //Переменная toFind1 используется в методе distribution() для выбора ветки рассчета для метода solver().
+    static String toFind1;
+    static String toFind2;
+
+    //Переменная equationCode имеет стандартное значение 0, значения соответствуют описанным ниже случаям.
+    static byte equation1Code;
+    static byte equation2Code;
 
     //Массивы литералов главных переменных по уравнениям.
-    //Используются в методе distribution() для выбора втки рассчета для метода solver().
     static String[] equation1 = {"n", "n0", "t", "k"};
     static String[] equation2 = {"k", "tHalf"};
+
+    /*Массивы литералов используются в методе distribution() для выбора втки рассчета для метода solver().
+    Пользователь вводит значения параметров в методе input(), вместо значений, которые необходимо найти по условию задачи
+    пользователь ставит знак "-" либо другой знак, который будет при действии на него метода Double.parceDouble()
+    вызывать ошибку, и перенаправлять try - catch выражение на блок catch. Пример инпута пользователя: 2,3.4,-,2,-
+    В зависимости от того, какие переменные пользователь введет можно выделить несколько случаев:
+    equationCode = 0) Вс значения данного уравнения известны. Если они известны сразу после ввода значений пользователем
+    то программа выдает ошибку: "Одно или несколько уравнений не имеют смысла"
+    equationCode = 1) Известны все значения кроме одного.
+    equationCode = 2) Известны все значение кроме двух
+
+    equationCode = 3) ... кроме 3.
+    ...
+    equationCode = n) ... кроме n.
+     */
+
 
     //Перевод массива в ArrayList<> для использования метода .contains() в методе distribution().
     static ArrayList<String> equation1List = new ArrayList<>(Arrays.asList(equation1));
@@ -36,7 +64,7 @@ public class Test_solver {
     //Используются в методе validation для оценки правилоности введенных пользователем данных.
     static byte numberOfArguments;
     static byte numberOfArgumentsBoundary1;
-    static byte numberOfParameters;
+    
 
 
     public static void output() {
@@ -55,11 +83,12 @@ public class Test_solver {
     
     
     public static void distribution1(String[] outputArray) {
-        if (outputArray.length == numberOfParameters) {
-            try {
+        if (outputArray.length == numberOfVariables) {
+            for (int i = 0; i < numberOfVariables; i++) {
+                try {
 
+                }
             }
-
 
         } else {
             throw new IllegalArgumentException("Введено неверное количество параметров");
@@ -76,7 +105,7 @@ public class Test_solver {
                     numberOfArguments++;
                 }
             } catch (Exception e) {
-                toFind = "n";
+                toFind1 = "n";
             }
 
             try {
@@ -87,7 +116,7 @@ public class Test_solver {
                     numberOfArguments++;
                 }
             } catch (Exception e) {
-                toFind = "n0";
+                toFind1 = "n0";
             }
 
             try {
@@ -98,7 +127,7 @@ public class Test_solver {
                     numberOfArguments++;
                 }
             } catch (Exception e) {
-                toFind = "t";
+                toFind1 = "t";
 
             }
             try {
@@ -109,7 +138,7 @@ public class Test_solver {
                     numberOfArguments++;
                 }
             } catch (Exception e) {
-                toFind = "k";
+                toFind1 = "k";
             }
 
             try {
@@ -120,7 +149,7 @@ public class Test_solver {
                     numberOfArguments++;
                 }
             } catch (Exception e) {
-                toFind = "tHalf";
+                toFind1 = "tHalf";
             }
 
         } else {
@@ -141,7 +170,7 @@ public class Test_solver {
 
 
     public static String solver() {
-        switch (toFind) {
+        switch (toFind1) {
             case "n":
                 n = n0 * Math.exp(-k * t);
 
