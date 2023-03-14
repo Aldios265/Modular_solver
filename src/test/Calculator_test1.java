@@ -50,15 +50,17 @@ public class Calculator_test1 {
     public interface Solver {
         public Object[] solver(Object[] objectDoubleArray);
     }
+    /* Solver - дополняет массив литералов, который содержит только одну неизвестную
+    * [-1394] -> [41394] по заранее прописанному алгоритму.*/
 
-    public class Solver1Class implements Solver{
+    public static class Solver1Class implements Solver{
         public Object[] solver(Object[] objectDoubleArray) {
 
             return new Object[]{10,10,10,10};
         }
     }
 
-    public class Solver2Class implements Solver{
+    public static class Solver2Class implements Solver{
         public Object[] solver(Object[] objectDoubleArray) {
 
             return new Object[]{10,10};
@@ -68,10 +70,10 @@ public class Calculator_test1 {
     /*Классы solver-ов*/
     /*Классы solver-ов*/
 
-    Solver1Class solver1 = new Solver1Class();
-    Solver2Class solver2 = new Solver2Class();
+    static Solver1Class solver1 = new Solver1Class();
+    static Solver2Class solver2 = new Solver2Class();
 
-    Solver[] solverArray = {solver1, solver2};
+    static Solver[] solverArray = {solver1, solver2};
     ArrayList<Solver> solverArrayList = new ArrayList<>(Arrays.asList(solverArray));
 
 
@@ -133,7 +135,7 @@ public class Calculator_test1 {
 
 /*Метод getOut преобразует массив объектов в сокращенный массив объектов соответствующий
 заданным массиву строк и массиву соответствующей сокращенной строки(накладывает маску)
-[1234]{abcd} + {bd} = [2,4], {bd} - equation array, {abcd} - general array*/
+[1234]{abcd} + {bd} = [2,4]   ,{bd} - equation array, {abcd} - general array*/
     public static Object[] getOut(String[] equationArray, String[] generalArray, Object[] objectArray) {
         Object[] tightObjectArray = new Object[equationArray.length];
         // счетчик для tightObjectArray;
@@ -182,7 +184,7 @@ public class Calculator_test1 {
     }
     /*Куницкий Андрей Владимирович, Химический факультет, 08.03.2023 солнечная погода*/
 
-/* Комбинация метода getOut и equationCodeDetermine */
+/* Комбинация метода getOut и equationCodeDetermine. Не используется */
     public static int equationFullCodeDetermine(String[] equationArray, String[] generalArray, Object[] objectArray) {
         int equationCode = 0;
         ArrayList<String> equationList = new ArrayList<>(Arrays.asList(equationArray));
@@ -194,44 +196,67 @@ public class Calculator_test1 {
         }
         return equationCode;
     }
+
+    /*функция getPosition определяет индекс элемента массива объектов с equationCode = 1
+    * который соответствует неизвестной переменной*/
+    public static int getPosition(Object[] objectDoubleArray) {
+        byte position = -1;
+        for (byte i = 0; i < objectDoubleArray.length; i++) {
+            if (!((Object) objectDoubleArray[i].getClass().getName() == "java.lang.Double")) {
+                position = i;
+            }
+        }
+        return position;
+    }
+
+    /* функция findAndFill() - используется после действия функции solver() на одно из уравнений с equationCode = 1
+     * Данная функция по координатам только что рассчитанной неизвестной(одни могут быть найдены с помощью функции getPosition(), вызываемой
+     * перед действием solver-а */
+    public static Object[][] findAndFill(int positionOuter, int positionInner, String[][] parametersStringArray, Object[][] doubleObjectArray) {
+        Object[][] finalDoubleObjectArray = doubleObjectArray.clone();
+        String givenVariable = parametersStringArray[positionOuter][positionInner];
+        double givenValue = (double) doubleObjectArray[positionOuter][positionInner];
+
+        for (int outer = 0; outer < parametersStringArray.length; outer++) {
+            if (outer != positionOuter) {
+                for (int inner = 0; inner < parametersStringArray[outer].length; inner++) {
+                    if (parametersStringArray[outer][inner].equals(givenVariable)) {
+                        finalDoubleObjectArray[outer][inner] = givenValue;
+                    }
+                }
+            }
+        }
+        return finalDoubleObjectArray;
+    }
 /*Данный метод представляет из себя петлю while, которая выполняется до тех пор, пока все элементы массива equationCodeArray не обнуляться,
 Для в данной петле работает другая петля, которая на каждом цикле петли while проходит по массиву equationCodeArray, созданному в самом начале
 метода, находит в нем единицы и вызывает для соответствующего массива объектов из массива массивов метод solver() из массива объектов
 класса Solver, имплементирующего одноименный интерфейс.*/
     public static Object[][] solverInitiatorLoop(Object[][] multiObjectArray, Solver[] solverArray, String[][] multiEquationArray) {
-        Object[][] anwserArray = new Object[multiObjectArray.length][];
+        Object[][] answerArray = new Object[multiObjectArray.length][];
         int[] equationCodeArray = arrayEquationCodeDetermine(multiObjectArray);
-        while (IntStream.of(equationCodeArray).sum() != 0) {
-            for (int i = 0; i < multiObjectArray.length; i++) {
-                if (equationCodeArray[i] == 1) {
-                    anwserArray[i] = solverArray[i].solver(multiObjectArray[i]);
-                }
-                /*Проверка на наличие одинаковых переменных в других уравнениях для того чтобы их приравнять.
-                 Скорее всего нужно будет написать отдельные метод для этих целей*/
-                for (int k = 1; i < multiEquationArray.length; k++) {
-                    for (int m = 0; m < multiEquationArray.length; m++) {
-                        if (m != k) {
-                            for (int n = 0; n < multiEquationArray.length; n++) {
-                                if (multiEquationArray[k].equals(multiEquationArray[m][n])) {
-                                    multiObjectArray[m][n] = multiObjectArray[k];
-                                }
-                            }
-                        }
-                    }
-                }
+//        while (IntStream.of(equationCodeArray).sum() != 0) {
+        for (int i = 0; i < multiObjectArray.length; i++) {
+            if (equationCodeArray[i] == 1) {
+                answerArray[i] = solverArray[i].solver(multiObjectArray[i]);
             }
         }
-        return anwserArray;
+//        }
+        return answerArray;
     }
 
     public static void solverMain() {
         output();
         Object[] objectDoubleArray = toDouble(input(numberOfVariables));
         Object[][] multiArray = arrayGetOut(multiEquationArray, parametersStringArray, objectDoubleArray);
+        Object[][] finalArray = solverInitiatorLoop(multiArray, solverArray, multiEquationArray);
+        System.out.println("-------");
         int[] byteArray = arrayEquationCodeDetermine(multiArray);
         for (int i : byteArray) {
             System.out.println(i);
         }
+
+
 
 
 
