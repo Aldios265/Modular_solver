@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
-public class Solver_ {
+public class Solver2_ {
 
 /**Описание: Данный Solver работает с переменными a,b,c,d,e,f,
  решает уравнения:
@@ -18,13 +18,13 @@ public class Solver_ {
     /** Блок настроек **/
 
     //массив строчных литералов переменных.
-    static String[] parametersStringArray = {"k2", "t", "c0a", "c0b"};
-    static String parametersString = "k2, t, c0a, c0b";
+    static String[] parametersStringArray = {"k", "c0", "c", "t", "t05"};
+    static String parametersString = "k, c0, c, t, t05";
 
     static int numberOfVariables = parametersStringArray.length;
 
     //Массив equation-ов
-    static String[][] multiEquationArray = {{"k2", "t", "c0a", "c0b", "ca", "cb"}};
+    static String[][] multiEquationArray = {{"k", "c0", "c", "t"}, {"k", "t05"}};
 
     /*Т.к количество неизвестных должно быть равно количеству переменных минус количество уравнений, то для
     того, чтобы не было противоречий в уравнениях, на экран в методе output будет выведена величина
@@ -47,41 +47,52 @@ public class Solver_ {
         public Object[] solver(Object[] objectDoubleArray) {
             int position = getPosition(objectDoubleArray);
             //Место для switch-блока
-//            switch (position) {
-//                case 0:
-//                    (double) objectDoubleArray[0]2 = (1 / (%t * ((double) objectDoubleArray[1]a - %c0b)) * Math.log((%c0b * %ca)/(%c0a * %cb)));
-//                    break;
-//
-//                case 1:
-//                    t = (Math.log((%c0b * %ca)/(%c0a * %cb)))) / (double) objectDoubleArray[0]2 * (%c0a - %c0b);
-//                    break;
-//
-//                case 2:
-//
-//                    break;
-//
-//                case 3:
-//
-//                    break;
-//
-//                case 4:
-//
-//                    break;
-//                case 5:
-//
-//                    break;
-//
-//
-//            }
-//            //Место для switch-блока
+            switch (position) {
+                case 0:
+                    objectDoubleArray[0] = (1/(double) objectDoubleArray[3]) * Math.log((double) objectDoubleArray[1]/(double) objectDoubleArray[2]);
+                    break;
+
+                case 1:
+                    objectDoubleArray[1] = Math.pow(Math.exp(1), (double) objectDoubleArray[0] * (double) objectDoubleArray[3]) * (double) objectDoubleArray[2];
+                    break;
+
+                case 2:
+                    objectDoubleArray[2] = (double) objectDoubleArray[1] / Math.pow(Math.exp(1), (double) objectDoubleArray[0] * (double) objectDoubleArray[3]);
+                    break;
+
+                case 3:
+                    objectDoubleArray[3] = Math.log((double) objectDoubleArray[1] / (double) objectDoubleArray[2]) / (double) objectDoubleArray[0];
+                    break;
+
+            }
+            //Место для switch-блока
+            return objectDoubleArray;
+        }
+    }
+
+    public static class Calculator2Class implements Calculator {
+        public Object[] solver(Object[] objectDoubleArray) {
+            int position = getPosition(objectDoubleArray);
+            //Место для switch-блока
+            switch (position) {
+                case 0:
+                    objectDoubleArray[0] = Math.log(2) / (double) objectDoubleArray[1];
+                    break;
+
+                case 1:
+                    objectDoubleArray[1] = Math.log((2)) / (double) objectDoubleArray[0];
+                    break;
+            }
+            //Место для switch-блока
             return objectDoubleArray;
         }
     }
 
     /* Преобразование Calculator-классов в соответствующий массив объектов */
     static Calculator1Class calculator1 = new Calculator1Class();
+    static Calculator2Class calculator2 = new Calculator2Class();
 
-    static Calculator[] solverArray = {calculator1};
+    static Calculator[] solverArray = {calculator1, calculator2};
 
     /** Блок настроек **/
 
