@@ -5,34 +5,38 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
-public class Solver_test_abc {
+public class Solver_test_abc2 {
 
-    /**Описание: Данный Solver работает с переменными a,b,c,d,e,
-     решает уравнения:
-      1) a = b * c
-      2) c = 10^d
-      3) d = cos(e)
-      **/
+/**Описание: Данный Solver работает с переменными a,b,c,d,e,f,
+ решает уравнения:
+    1) c = 25 * b * ln(a)
+    2) e = cos(b * a * f)
+    3) d = 5 * e
+ **/
+
 
     /** Блок настроек **/
 
     //массив строчных литералов переменных.
-    static String[] parametersStringArray = {"a", "b", "c", "d", "e"};
-    static String parametersString = "a, b, c, d, e";
-    static String parametersStringGrouped1 = "[a, b, c], [c, d], [d, e]";
-    static String parametersStringGrouped2 = "(a, b, [c), {d], e}";
+    static String[] parametersStringArray = {"a", "b", "c", "d", "e", "f"};
+    static String parametersString = "a, b, c, d, e, f";
 
     static int numberOfVariables = parametersStringArray.length;
 
     //Массив equation-ов
-    static String[][] multiEquationArray = {{"a", "b", "c"}, {"c", "d"}, {"d", "e"}};
+    static String[][] multiEquationArray = {{"a", "b", "c"}, {"a", "b", "e", "f"}, {"d", "e"}};
+
+    /*Т.к количество неизвестных должно быть равно количеству переменных минус количество уравнений, то для
+    того, чтобы не было противоречий в уравнениях, на экран в методе output будет выведена величина
+    numberOfUnknowns*/
+    static int numberOfUnknowns = parametersStringArray.length - multiEquationArray.length;
+
 
 
     /*Интерфейс для работы calculator-ов*/
     public interface Calculator {
         Object[] solver(Object[] objectDoubleArray);
     }
-
 
     /** Calculator **/
     /* - дополняет массив литералов, который содержит только одну неизвестную
@@ -43,19 +47,20 @@ public class Solver_test_abc {
         public Object[] solver(Object[] objectDoubleArray) {
             int position = getPosition(objectDoubleArray);
             //Место для switch-блока
-                switch (position) {
-                    case 0:
-                        objectDoubleArray[0] = (double) objectDoubleArray[1] * (double) objectDoubleArray[2];
-                        break;
+            switch (position) {
+                case 0:
+                    objectDoubleArray[0] = Math.pow(Math.exp(1), (double) objectDoubleArray[2] / (25 * (double) objectDoubleArray[1]));
+                    break;
 
-                    case 1:
-                        objectDoubleArray[1] = (double) objectDoubleArray[0] / (double) objectDoubleArray[2];
-                        break;
+                case 1:
+                    objectDoubleArray[1] = (double) objectDoubleArray[2] / (25 * Math.log((double) objectDoubleArray[0]));
+                    break;
 
-                    case 2:
-                        objectDoubleArray[2] = (double) objectDoubleArray[0] / (double) objectDoubleArray[1];
-                        break;
-                }
+                case 2:
+                    objectDoubleArray[2] = 25 * (double) objectDoubleArray[1] * Math.log((double) objectDoubleArray[0]);
+                    break;
+
+            }
             //Место для switch-блока
             return objectDoubleArray;
         }
@@ -65,14 +70,22 @@ public class Solver_test_abc {
         public Object[] solver(Object[] objectDoubleArray) {
             int position = getPosition(objectDoubleArray);
             //Место для switch-блока
-                switch (position) {
-                    case 0:
-                        objectDoubleArray[0] = Math.pow(10, ((double) objectDoubleArray[1]));
-                        break;
-                    case 1:
-                        objectDoubleArray[1] = Math.log10((double) objectDoubleArray[0]);
-                        break;
-                }
+            switch (position) {
+                case 0:
+                    objectDoubleArray[0] = Math.acos((double) objectDoubleArray[2]) / ((double) objectDoubleArray[1] * (double) objectDoubleArray[3]);
+                    break;
+                case 1:
+                    objectDoubleArray[1] = Math.acos((double) objectDoubleArray[2]) / ((double) objectDoubleArray[0] * (double) objectDoubleArray[3]);
+                    break;
+
+                case 2:
+                    objectDoubleArray[2] = Math.cos((double) objectDoubleArray[1] * (double) objectDoubleArray[0] * (double) objectDoubleArray[3]);
+                    break;
+
+                case 3:
+                    objectDoubleArray[3] = Math.acos((double) objectDoubleArray[2]) / ((double) objectDoubleArray[0] * (double) objectDoubleArray[1]);
+                    break;
+            }
             //Место для switch-блока
             return objectDoubleArray;
         }
@@ -82,14 +95,14 @@ public class Solver_test_abc {
         public Object[] solver(Object[] objectDoubleArray) {
             int position = getPosition(objectDoubleArray);
             //Место для switch-блока
-                switch (position) {
-                    case 0:
-                        objectDoubleArray[0] = Math.cos((double) objectDoubleArray[1]);
-                        break;
-                    case 1:
-                        objectDoubleArray[1] = Math.acos((double) objectDoubleArray[0]);
-                        break;
-                }
+            switch (position) {
+                case 0:
+                    objectDoubleArray[0] = 5 * (double) objectDoubleArray[1];
+                    break;
+                case 1:
+                    objectDoubleArray[1] = (double) objectDoubleArray[0] / 5;
+                    break;
+            }
             //Место для switch-блока
             return objectDoubleArray;
         }
@@ -117,7 +130,7 @@ public class Solver_test_abc {
     /*Функция вывода сообщения пользователю*/
     public static void output() {
         System.out.println("Введите значения через запятую: \n" +
-                parametersStringGrouped1 + "\n" +
+                "Количество неизвестных: " + numberOfUnknowns + "\n" +
                 parametersString);
     }
 
@@ -274,7 +287,7 @@ public class Solver_test_abc {
         }
     }
 }
-    /** Основная функция **/
+/** Основная функция **/
 
 
 
