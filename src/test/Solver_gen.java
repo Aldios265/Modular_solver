@@ -9,13 +9,13 @@ public class Solver_gen {
 
 
     /** Блок инициализации функций **/
-
     /*Функция вывода сообщения пользователю*/
     public static void output(String parametersString, int numberOfUnknowns) {
         System.out.println("Введите значения через запятую: \n" +
                 "Количество неизвестных: " + numberOfUnknowns + "\n" +
                 parametersString);
     }
+
 
 
     /*метод input() преобразует строку, введенную пользователем в массив строк, разделенных запятой
@@ -32,8 +32,9 @@ public class Solver_gen {
     }
 
 
+
     /* Метод toDouble() преобразует массив строк в массив объектов. Объекты,
-    преобразующиеся в double с момощью Double.parceDouble() метод записывает в массив как double datatype, остальные оставляет такими какие они есть */
+    преобразующиеся в double с момощью Double.pareDouble() метод записывает в массив как double datatype, остальные оставляет такими какие они есть */
     public static Object[] toDouble(String[] initialArray) {
         Object[] objectDoubleArray = new Object[initialArray.length];
         for (int i = 0; i < initialArray.length; i++) {
@@ -45,6 +46,7 @@ public class Solver_gen {
         }
         return objectDoubleArray;
     }
+
 
 
     /*Метод getOut преобразует массив объектов в сокращенный массив объектов соответствующий
@@ -65,6 +67,7 @@ public class Solver_gen {
     }
 
 
+
     /*Функция arrayGetOut() является аналогом функции getOut но только вместо шаблона массивов типа [a,b] берет шаблон
      массивов массивов типа [[a,b],[c,d]] и возвращает не [1,2] а [[1,2],[3,4]]
      Итого [[1,2],[3,4]]{a,b,c,d} + [[a,b],[c,d]] = [[1,2],[3,4]]
@@ -79,8 +82,9 @@ public class Solver_gen {
     }
 
 
+
     /*Данный метод рассчитывает equationCode массива объектов, если массив содержит все
-     * double-ы и только один не double то quationCode = 1, если 2 то 2 и.т.д */
+     * double-ы и только один не double то equationCode = 1, если 2 то 2 и.т.д */
     public static int equationCodeDetermine(Object[] objectArray) {
         int equationCode = 0;
         for (int i = 0; i < objectArray.length; i++) {
@@ -90,6 +94,7 @@ public class Solver_gen {
         }
         return equationCode;
     }
+
 
 
     /*Функция arrayEquationCodeDetermine определяет equationCode и выводит его в виде массива для
@@ -116,6 +121,7 @@ public class Solver_gen {
     }
 
 
+
     /* функция findAndFill() - используется после действия функции solver() на одно из уравнений с equationCode = 1
      * Данная функция по координатам только что рассчитанной неизвестной(одни могут быть найдены с помощью функции getPosition(), вызываемой
      * перед действием solver-а. Возвращает она массив, в котором дополнены все те места которые соотвествтвуют рассчитанной переменной.*/
@@ -134,6 +140,8 @@ public class Solver_gen {
         }
         return finalDoubleObjectArray;
     }
+
+
 
 
     /*Данный метод представляет из себя петлю while, которая выполняется до тех пор, пока все элементы массива equationCodeArray не обнуляться,
@@ -156,6 +164,8 @@ public class Solver_gen {
         return solvedArray;
     }
 
+
+
     /*Функция pack() преобразует решенный массив(solvedArray) в вид листа [12][34]+[abcd]+[ab][cd] = [1234]*/
     public static Object[] pack(String[] parametersStringArray, String[][] multiEquationArray, Object[][] solvedArray) {
         Object[] answerArray = new Object[parametersStringArray.length];
@@ -171,18 +181,25 @@ public class Solver_gen {
         return answerArray;
     }
 
+
+
     //Преобразует массив переменных в строку с перечислением через запятую.
     public static String parseArray(String[] parametersArray) {
-        return Arrays.stream(parametersArray).collect(StringBuilder::new, (x,y) -> x.append(", " + y),StringBuilder::append).toString().substring(2);
+        return Arrays.stream(parametersArray).collect(StringBuilder::new, (x,y) -> x.append(", " + y),StringBuilder::append).substring(2);
     }
 
-    /** Блок инициализации функций **/
 
 
 
     /** Основная функция **/
-    public static Object[] solverMain(String[] parametersArray, String[][] equationArray, Calculator[] calculatorsArray) {
+    public static Object[] solverMain(Cartridge cartridge) {
+        //Считывание картриджа.
+        String[] parametersArray = cartridge.getParametersArray();
+        String[][] equationArray = cartridge.getEquationArray();
+        Calculator[] calculatorsArray = cartridge.getCalculatorArray();
         int numberOfUnknowns = parametersArray.length - equationArray.length;
+
+        //Вызов методов.
         String parametersString = parseArray(parametersArray);
         output(parametersString, numberOfUnknowns);
         String[] userInput = input(parametersArray.length);
@@ -193,9 +210,6 @@ public class Solver_gen {
     }
 }
 
-
-
-/** Основная функция **/
 
 
 
