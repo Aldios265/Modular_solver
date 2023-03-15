@@ -5,59 +5,114 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
-public class Solver_test_10 {
+public class Solver_test_abc {
 
+    /** Блок настроек **/
 
     //массив строчных литералов переменных.
-    static String[] parametersStringArray = {"n", "n0", "t", "k", "tHalf"};
-
+    static String[] parametersStringArray = {"a", "b", "c", "d", "e"};
+    static String parametersString = "a, b, c, d, e";
+    static String parametersStringGrouped1 = "[a, b, c], [c, d], [d, e]";
+    static String parametersStringGrouped2 = "(a, b, [c), {d], e}";
 
     static int numberOfVariables = parametersStringArray.length;
 
-
     //Массив equation-ов
-    static String[][] multiEquationArray = {{"n", "n0", "t", "k"},{"k", "tHalf"}};
+    static String[][] multiEquationArray = {{"a", "b", "c"}, {"c", "d"}, {"d", "e"}};
 
 
-
-    /*Классы solver-ов*/
-    public interface Solver {
-        public Object[] solver(Object[] objectDoubleArray);
+    /*Интерфейс для работы calculator-ов*/
+    public interface Calculator {
+        Object[] solver(Object[] objectDoubleArray);
     }
 
-    /* Solver - дополняет массив литералов, который содержит только одну неизвестную
-     [-1394] -> [41394] по заранее прописанному алгоритму. ОБЯЗАТЕЛЬНО ДОЛЖЕН ВОЗВРАЩАТЬ DOUBLE!*/
 
-    public static class Solver1Class implements Solver{
+    /** Calculator **/
+    /* - дополняет массив литералов, который содержит только одну неизвестную
+     [-1394] -> [41394] по заранее прописанному алгоритму. ОБЯЗАТЕЛЬНО ДОЛЖЕН ВОЗВРАЩАТЬ DOUBLE!. Заменить
+     тип возвращаемой переменной нельзя т.к он работает с одним из типов Object[][]*/
+
+    public static class Calculator1Class implements Calculator {
         public Object[] solver(Object[] objectDoubleArray) {
+            int position = getPosition(objectDoubleArray);
+            //Место для switch-блока
+                switch (position) {
+                    case 0:
+                        objectDoubleArray[0] = (double) objectDoubleArray[1] * (double) objectDoubleArray[2];
+                        break;
 
-            return new Object[]{10d,10d,10d,10d};
+                    case 1:
+                        objectDoubleArray[1] = (double) objectDoubleArray[0] / (double) objectDoubleArray[2];
+                        break;
+
+                    case 2:
+                        objectDoubleArray[2] = (double) objectDoubleArray[0] / (double) objectDoubleArray[1];
+                        break;
+                }
+            //Место для switch-блока
+            return objectDoubleArray;
         }
     }
 
-    public static class Solver2Class implements Solver{
+    public static class Calculator2Class implements Calculator {
         public Object[] solver(Object[] objectDoubleArray) {
-
-            return new Object[]{10d,10d};
+            int position = getPosition(objectDoubleArray);
+            //Место для switch-блока
+                switch (position) {
+                    case 0:
+                        objectDoubleArray[0] = Math.pow(10, ((double) objectDoubleArray[0]));
+                        break;
+                    case 1:
+                        objectDoubleArray[1] = Math.log10((double) objectDoubleArray[0]);
+                        break;
+                }
+            //Место для switch-блока
+            return objectDoubleArray;
         }
     }
 
-    /*Классы solver-ов*/
+    public static class Calculator3Class implements Calculator {
+        public Object[] solver(Object[] objectDoubleArray) {
+            int position = getPosition(objectDoubleArray);
+            //Место для switch-блока
+                switch (position) {
+                    case 0:
+                        objectDoubleArray[0] = Math.cos((double) objectDoubleArray[1]);
+                        break;
+                    case 1:
+                        objectDoubleArray[1] = Math.acos((double) objectDoubleArray[0]);
+                        break;
+                }
+            //Место для switch-блока
+            return objectDoubleArray;
+        }
+    }
 
-    static Solver1Class solver1 = new Solver1Class();
-    static Solver2Class solver2 = new Solver2Class();
-
-    static Solver[] solverArray = {solver1, solver2};
 
 
+
+
+    /* Преобразование Calculator-классов в соответствующий массив объектов */
+    static Calculator1Class calculator1 = new Calculator1Class();
+    static Calculator2Class calculator2 = new Calculator2Class();
+    static Calculator3Class calculator3 = new Calculator3Class();
+
+    static Calculator[] solverArray = {calculator1, calculator2, calculator3};
+
+    /** Блок настроек **/
+
+
+
+
+
+    /** Блок инициализации функций **/
 
     /*Функция вывода сообщения пользователю*/
     public static void output() {
-        System.out.println("Рассчет реакций первого порядка \n" +
-                "Введите значения через запятую: \n" +
-                "n, n0, t, [k, t(1/2)]");
+        System.out.println("Введите значения через запятую: \n" +
+                parametersStringGrouped1 + "\n" +
+                parametersString);
     }
-
 
 
     /*метод input() преобразует строку, введенную пользователем в массив строк, разделенных запятой
@@ -107,7 +162,6 @@ public class Solver_test_10 {
     }
 
 
-
     /*Функция arrayGetOut() является аналогом функции getOut но только вместо шаблона массивов типа [a,b] берет шаблон
      массивов массивов типа [[a,b],[c,d]] и возвращает не [1,2] а [[1,2],[3,4]]
      Итого [[1,2],[3,4]]{a,b,c,d} + [[a,b],[c,d]] = [[1,2],[3,4]]
@@ -120,8 +174,6 @@ public class Solver_test_10 {
         }
         return multiObjectArray;
     }
-
-
 
 
     /*Данный метод рассчитывает equationCode массива объектов, если массив содержит все
@@ -138,7 +190,7 @@ public class Solver_test_10 {
 
 
     /*Функция arrayEquationCodeDetermine определяет equationCode и выводит его в виде массива для
-    * каждого из уравнений*/
+     * каждого из уравнений*/
     public static int[] arrayEquationCodeDetermine(Object[][] multiObjectArray) {
         int[] equationCodeArray = new int[multiObjectArray.length];
         for (int i = 0; i < multiObjectArray.length; i++) {
@@ -146,23 +198,6 @@ public class Solver_test_10 {
         }
         return equationCodeArray;
     }
-
-
-
-    /* Комбинация метода getOut и equationCodeDetermine. Не используется */
-    public static int equationFullCodeDetermine(String[] equationArray, String[] generalArray, Object[] objectArray) {
-        int equationCode = 0;
-        ArrayList<String> equationList = new ArrayList<>(Arrays.asList(equationArray));
-        for (int i = 0; i < generalArray.length; i++) {
-            if (!((Object) objectArray[i].getClass().getName() == "java.lang.Double")
-                    && (equationList.contains(generalArray[i]))) {
-                equationCode++;
-            }
-        }
-        return equationCode;
-    }
-
-
 
 
     /*функция getPosition определяет индекс элемента массива объектов с equationCode = 1
@@ -176,7 +211,6 @@ public class Solver_test_10 {
         }
         return position;
     }
-
 
 
     /* функция findAndFill() - используется после действия функции solver() на одно из уравнений с equationCode = 1
@@ -199,12 +233,11 @@ public class Solver_test_10 {
     }
 
 
-
     /*Данный метод представляет из себя петлю while, которая выполняется до тех пор, пока все элементы массива equationCodeArray не обнуляться,
     Для этого в данной петле присутствует другая пется, которая на каждом цикле петли while проходит по массиву equationCodeArray, созданному в самом начале
     метода, находит в нем единицы и вызывает для соответствующего массива объектов из массива массивов метод solver() из массива объектов
     класса Solver, имплементирующего одноименный интерфейс.*/
-    public static Object[][] solverInitiatorLoop(Object[][] multiObjectArray, Solver[] solverArray, String[][] multiEquationArray) {
+    public static Object[][] solverInitiatorLoop(Object[][] multiObjectArray, Calculator[] solverArray, String[][] multiEquationArray) {
         Object[][] solvedArray = multiObjectArray.clone();
         int[] equationCodeArray = arrayEquationCodeDetermine(multiObjectArray);
         while (IntStream.of(equationCodeArray).sum() != 0) {
@@ -219,9 +252,11 @@ public class Solver_test_10 {
         }
         return solvedArray;
     }
+    /** Блок инициализации функций **/
 
 
 
+    /** Основная функция **/
     public static void solverMain() {
         output();
         Object[] objectDoubleArray = toDouble(input(numberOfVariables));
@@ -230,27 +265,49 @@ public class Solver_test_10 {
         for (Object[] array : finalArray) {
             System.out.println(Arrays.asList(array));
         }
-
-//        int[] byteArray = arrayEquationCodeDetermine(multiArray);
-//        for (int i : byteArray) {
-//            System.out.println(i);
-//        }
-
-
-
-
-
-
-
-
-//        for (int i = 0; i < multiArray.length; i++) {
-//            System.out.println("-----");
-//            for (int k = 0; k < multiArray[i].length; k++) {
-//                System.out.println(multiArray[i][k]);
-//            }
-    }  /*Для проверки подлинности: Автор - Куницкий Андрей Владимирович, химический факультет.*/
-//        System.out.println(Arrays.asList(getOut(equation1, parametersStringArray, objectDoubleArray)));
-//        System.out.println(Arrays.asList(getOut(equation2, parametersStringArray, objectDoubleArray)));
+    }
 }
+    /** Основная функция **/
+
+
+
+
+
+/* Образец Calculator-а
+
+public static class Calculator1Class implements Calculator {
+        public Object[] solver(Object[] objectDoubleArray) {
+            int position = getPosition(objectDoubleArray);
+            //Место для switch-блока
+
+            //Место для switch-блока
+            return objectDoubleArray;
+        }
+    }
+ */
+
+
+
+
+/* Шаблон switch для calculator-а
+
+    switch (position) {
+            case 0:
+
+                break;
+            case 1:
+
+                break;
+
+            case 2:
+
+                break;
+        }
+    */
+
+
+
+
+/* Автор - Куницкий Андрей Владимирович, химический факультет.*/
 
 
