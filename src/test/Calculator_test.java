@@ -2,7 +2,7 @@ package test;
 
 import java.util.Arrays;
 
-public class Solver_test {
+public class Calculator_test {
     public static Object[] solveabc(Object[] objectDoubleArray) {
 
         /*Определение позиции неизвестного элемента*/
