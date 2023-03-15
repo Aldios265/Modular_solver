@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Main_test {
     public static void main(String[] args) {
-        Calculator_test1.solverMain();
+        Calculator_test2.solverMain();
         }
     }
 

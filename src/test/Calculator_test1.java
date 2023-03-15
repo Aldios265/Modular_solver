@@ -1,5 +1,6 @@
 package test;
 
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -75,6 +76,7 @@ public class Calculator_test1 {
 
     static Solver[] solverArray = {solver1, solver2};
     ArrayList<Solver> solverArrayList = new ArrayList<>(Arrays.asList(solverArray));
+
 
 
     /*Массивы литералов используются для выбора втки рассчета для метода solver().
@@ -233,11 +235,12 @@ public class Calculator_test1 {
 метода, находит в нем единицы и вызывает для соответствующего массива объектов из массива массивов метод solver() из массива объектов
 класса Solver, имплементирующего одноименный интерфейс.*/
     public static Object[][] solverInitiatorLoop(Object[][] multiObjectArray, Solver[] solverArray, String[][] multiEquationArray) {
-        Object[][] answerArray = new Object[multiObjectArray.length][];
+        Object[][] answerArray = multiObjectArray.clone();
         int[] equationCodeArray = arrayEquationCodeDetermine(multiObjectArray);
 //        while (IntStream.of(equationCodeArray).sum() != 0) {
         for (int i = 0; i < multiObjectArray.length; i++) {
             if (equationCodeArray[i] == 1) {
+                int innerPosition = getPosition(multiObjectArray[i]);
                 answerArray[i] = solverArray[i].solver(multiObjectArray[i]);
             }
         }
@@ -250,11 +253,14 @@ public class Calculator_test1 {
         Object[] objectDoubleArray = toDouble(input(numberOfVariables));
         Object[][] multiArray = arrayGetOut(multiEquationArray, parametersStringArray, objectDoubleArray);
         Object[][] finalArray = solverInitiatorLoop(multiArray, solverArray, multiEquationArray);
-        System.out.println("-------");
-        int[] byteArray = arrayEquationCodeDetermine(multiArray);
-        for (int i : byteArray) {
-            System.out.println(i);
+        for (Object[] array : finalArray) {
+            System.out.println(Arrays.asList(array));
         }
+
+//        int[] byteArray = arrayEquationCodeDetermine(multiArray);
+//        for (int i : byteArray) {
+//            System.out.println(i);
+//        }
 
 
 
