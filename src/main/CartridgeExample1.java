@@ -4,7 +4,7 @@ package main;
 
 public class CartridgeExample1 implements Cartridge {
 
-    /**Описание: Данный Solver работает с переменными a,b,c,d,e,
+    /**Описание: Данный картридж работает с переменными a,b,c,d,e,
      решает уравнения:
      1) a = b * c
      2) c = 10^d
