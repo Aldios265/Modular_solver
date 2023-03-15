@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 public class Solver_test_ {
 
-
+    /** Блок настроек **/
     //массив строчных литералов переменных.
     static String[] parametersStringArray = {"a", "b", "c", "d", "e"};
     static String parametersString = "a, b, c, d, e";
@@ -17,45 +17,54 @@ public class Solver_test_ {
     static int numberOfVariables = parametersStringArray.length;
 
     //Массив equation-ов
-    static String[][] multiEquationArray = {{"a", "b", "c"},{"c", "d"},{"d", "e"}};
+    static String[][] multiEquationArray = {{"a", "b", "c"}, {"c", "d"}, {"d", "e"}};
 
 
-    /*Классы solver-ов*/
+    /*Интерфейс для работы calculator-ов*/
     public interface Solver {
-        public Object[] solver(Object[] objectDoubleArray);
+        Object[] solver(Object[] objectDoubleArray);
     }
 
-    /* Solver - дополняет массив литералов, который содержит только одну неизвестную
-     [-1394] -> [41394] по заранее прописанному алгоритму. ОБЯЗАТЕЛЬНО ДОЛЖЕН ВОЗВРАЩАТЬ DOUBLE!*/
 
-    public static class Solver1Class implements Solver{
+    /** Calculator - дополняет массив литералов, который содержит только одну неизвестную
+     [-1394] -> [41394] по заранее прописанному алгоритму. ОБЯЗАТЕЛЬНО ДОЛЖЕН ВОЗВРАЩАТЬ DOUBLE! **/
+    public static class Calculator1Class implements Solver {
         public Object[] solver(Object[] objectDoubleArray) {
 
-            return new Object[]{10d,10d,10d};
+            return new Object[]{10d, 10d, 10d};
         }
     }
 
-    public static class Solver2Class implements Solver{
+    public static class Calculator2Class implements Solver {
         public Object[] solver(Object[] objectDoubleArray) {
 
-            return new Object[]{10d,10d};
-        }
-    }
-    public static class Solver3Class implements Solver{
-        public Object[] solver(Object[] objectDoubleArray) {
-
-            return new Object[]{10d,10d};
+            return new Object[]{10d, 10d};
         }
     }
 
-    /*Классы solver-ов*/
-    static Solver1Class solver1 = new Solver1Class();
-    static Solver2Class solver2 = new Solver2Class();
-    static Solver3Class solver3 = new Solver3Class();
+    public static class Calculator3Class implements Solver {
+        public Object[] solver(Object[] objectDoubleArray) {
+
+            return new Object[]{10d, 10d};
+        }
+    }
 
 
-    static Solver[] solverArray = {solver1, solver2, solver3};
 
+    /* Преобразование Calculator-классов в соответствующий массив объектов */
+    static Calculator1Class calculator1 = new Calculator1Class();
+    static Calculator2Class calculator2 = new Calculator2Class();
+    static Calculator3Class calculator3 = new Calculator3Class();
+
+    static Solver[] solverArray = {calculator1, calculator2, calculator3};
+
+    /** Блок настроек **/
+
+
+
+
+
+    /** Блок инициализации функций **/
 
     /*Функция вывода сообщения пользователю*/
     public static void output() {
@@ -64,7 +73,6 @@ public class Solver_test_ {
                 parametersStringGrouped1 + "\n" +
                 parametersString);
     }
-
 
 
     /*метод input() преобразует строку, введенную пользователем в массив строк, разделенных запятой
@@ -114,7 +122,6 @@ public class Solver_test_ {
     }
 
 
-
     /*Функция arrayGetOut() является аналогом функции getOut но только вместо шаблона массивов типа [a,b] берет шаблон
      массивов массивов типа [[a,b],[c,d]] и возвращает не [1,2] а [[1,2],[3,4]]
      Итого [[1,2],[3,4]]{a,b,c,d} + [[a,b],[c,d]] = [[1,2],[3,4]]
@@ -127,8 +134,6 @@ public class Solver_test_ {
         }
         return multiObjectArray;
     }
-
-
 
 
     /*Данный метод рассчитывает equationCode массива объектов, если массив содержит все
@@ -155,23 +160,6 @@ public class Solver_test_ {
     }
 
 
-
-    /* Комбинация метода getOut и equationCodeDetermine. Не используется */
-    public static int equationFullCodeDetermine(String[] equationArray, String[] generalArray, Object[] objectArray) {
-        int equationCode = 0;
-        ArrayList<String> equationList = new ArrayList<>(Arrays.asList(equationArray));
-        for (int i = 0; i < generalArray.length; i++) {
-            if (!((Object) objectArray[i].getClass().getName() == "java.lang.Double")
-                    && (equationList.contains(generalArray[i]))) {
-                equationCode++;
-            }
-        }
-        return equationCode;
-    }
-
-
-
-
     /*функция getPosition определяет индекс элемента массива объектов с equationCode = 1
      * который соответствует неизвестной переменной*/
     public static int getPosition(Object[] objectDoubleArray) {
@@ -183,7 +171,6 @@ public class Solver_test_ {
         }
         return position;
     }
-
 
 
     /* функция findAndFill() - используется после действия функции solver() на одно из уравнений с equationCode = 1
@@ -206,7 +193,6 @@ public class Solver_test_ {
     }
 
 
-
     /*Данный метод представляет из себя петлю while, которая выполняется до тех пор, пока все элементы массива equationCodeArray не обнуляться,
     Для этого в данной петле присутствует другая пется, которая на каждом цикле петли while проходит по массиву equationCodeArray, созданному в самом начале
     метода, находит в нем единицы и вызывает для соответствующего массива объектов из массива массивов метод solver() из массива объектов
@@ -226,9 +212,11 @@ public class Solver_test_ {
         }
         return solvedArray;
     }
+    /** Блок заданя функций **/
 
 
 
+    /** Основная функция **/
     public static void solverMain() {
         output();
         Object[] objectDoubleArray = toDouble(input(numberOfVariables));
@@ -237,27 +225,15 @@ public class Solver_test_ {
         for (Object[] array : finalArray) {
             System.out.println(Arrays.asList(array));
         }
-
-//        int[] byteArray = arrayEquationCodeDetermine(multiArray);
-//        for (int i : byteArray) {
-//            System.out.println(i);
-//        }
-
-
-
-
-
-
-
-
-//        for (int i = 0; i < multiArray.length; i++) {
-//            System.out.println("-----");
-//            for (int k = 0; k < multiArray[i].length; k++) {
-//                System.out.println(multiArray[i][k]);
-//            }
-    }  /*Для проверки подлинности: Автор - Куницкий Андрей Владимирович, химический факультет.*/
-//        System.out.println(Arrays.asList(getOut(equation1, parametersStringArray, objectDoubleArray)));
-//        System.out.println(Arrays.asList(getOut(equation2, parametersStringArray, objectDoubleArray)));
+    }
 }
+    /** Основная функция **/
+
+
+
+
+
+
+/* Автор - Куницкий Андрей Владимирович, химический факультет.*/
 
 
