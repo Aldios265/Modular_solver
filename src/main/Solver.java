@@ -11,9 +11,7 @@ public class Solver {
     /** Блок инициализации функций **/
     /*Функция вывода сообщения пользователю*/
     public static void output(String parametersString, int numberOfUnknowns) {
-        System.out.println("Введите значения через запятую: \n" +
-                "Количество неизвестных: " + numberOfUnknowns + "\n" +
-                parametersString);
+        System.out.println("Введите значения через запятую: \n" + parametersString);
     }
 
 
@@ -123,8 +121,8 @@ public class Solver {
 
 
     /* функция findAndFill() - используется после действия функции solver() на одно из уравнений с equationCode = 1
-     * Данная функция по координатам только что рассчитанной неизвестной(одни могут быть найдены с помощью функции getPosition(), вызываемой
-     * перед действием solver-а. Возвращает она массив, в котором дополнены все те места которые соотвествтвуют рассчитанной переменной.*/
+     Данная функция по координатам только что рассчитанной неизвестной(одни могут быть найдены с помощью функции getPosition(), вызываемой
+     перед действием solver-а. Возвращает она массив, в котором дополнены все те места которые соотвествтвуют рассчитанной переменной.*/
     public static Object[][] findAndFill(int positionOuter, int positionInner, String[][] multiEquationArray, Object[][] doubleObjectArray) {
         Object[][] finalDoubleObjectArray = doubleObjectArray.clone();
         String givenVariable = multiEquationArray[positionOuter][positionInner];
