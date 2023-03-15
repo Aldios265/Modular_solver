@@ -5,13 +5,13 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
-public class Solver_test_abc2 {
+public class Solver_ {
 
 /**Описание: Данный Solver работает с переменными a,b,c,d,e,f,
  решает уравнения:
-    1) c = 25 * b * ln(a)
-    2) e = cos(b * a * f)
-    3) d = 5 * e
+ 1) c = 25 * b * ln(a)
+ 2) e = cos(b * a * f)
+ 3) d = 5 * e
  **/
 
 
@@ -49,15 +49,15 @@ public class Solver_test_abc2 {
             //Место для switch-блока
             switch (position) {
                 case 0:
-                    objectDoubleArray[0] = Math.pow(Math.exp(1), (double) objectDoubleArray[2] / (25 * (double) objectDoubleArray[1]));
+
                     break;
 
                 case 1:
-                    objectDoubleArray[1] = (double) objectDoubleArray[2] / (25 * Math.log((double) objectDoubleArray[0]));
+
                     break;
 
                 case 2:
-                    objectDoubleArray[2] = 25 * (double) objectDoubleArray[1] * Math.log((double) objectDoubleArray[0]);
+
                     break;
 
             }
@@ -273,14 +273,14 @@ public class Solver_test_abc2 {
         return solvedArray;
     }
 
-/*Функция pack() преобразует решенный массив(solvedArray) в вид листа [12][34]+[abcd]+[ab][cd] = [1234]*/
-    public static Object[] pack(String[] parametersStringArray, String[][] multiEquationArray, Object[][] solvedArray) {
-        Object[] answerArray = new Object[parametersStringArray.length];
+
+    public static double[] pack(String[] parametersStringArray, String[][] multiEquationArray, Object[][] objectDoubleArray) {
+        double[] answerArray = new double[parametersStringArray.length];
         for (int i = 0; i < parametersStringArray.length; i++) {
             for (int k = 0; k < multiEquationArray.length; k++) {
                 for (int l = 0; l < multiEquationArray[k].length; l++) {
                     if (parametersStringArray[i] == multiEquationArray[k][l]) {
-                        answerArray[i] = (double) solvedArray[k][l];
+                        answerArray[i] = (double) objectDoubleArray[k][l];
                     }
                 }
             }
@@ -297,12 +297,12 @@ public class Solver_test_abc2 {
         output();
         Object[] objectDoubleArray = toDouble(input(numberOfVariables));
         Object[][] multiArray = arrayGetOut(multiEquationArray, parametersStringArray, objectDoubleArray);
-        Object[][] answerUnpackedArray = solverInitiatorLoop(multiArray, solverArray, multiEquationArray);
-        Object[] answerArray = pack(parametersStringArray, multiEquationArray, answerUnpackedArray);
-        System.out.println(Arrays.asList(answerArray));
+        Object[][] finalArray = solverInitiatorLoop(multiArray, solverArray, multiEquationArray);
+        for (Object[] array : finalArray) {
+            System.out.println(Arrays.asList(array));
         }
     }
-
+}
 /** Основная функция **/
 
 
