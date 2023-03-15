@@ -5,19 +5,19 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
-public class Solver_test2 {
+public class Solver_test_ {
 
 
     //массив строчных литералов переменных.
-    static String[] parametersStringArray = {"n", "n0", "t", "k", "tHalf"};
-
+    static String[] parametersStringArray = {"a", "b", "c", "d", "e"};
+    static String parametersString = "a, b, c, d, e";
+    static String parametersStringGrouped1 = "[a, b, c], [c, d], [d, e]";
+    static String parametersStringGrouped2 = "(a, b, [c), {d], e}";
 
     static int numberOfVariables = parametersStringArray.length;
 
-
     //Массив equation-ов
-    static String[][] multiEquationArray = {{"n", "n0", "t", "k"},{"k", "tHalf"}};
-
+    static String[][] multiEquationArray = {{"a", "b", "c"},{"c", "d"},{"d", "e"}};
 
 
     /*Классы solver-ов*/
@@ -31,7 +31,7 @@ public class Solver_test2 {
     public static class Solver1Class implements Solver{
         public Object[] solver(Object[] objectDoubleArray) {
 
-            return new Object[]{10d,10d,10d,10d};
+            return new Object[]{10d,10d,10d};
         }
     }
 
@@ -41,21 +41,28 @@ public class Solver_test2 {
             return new Object[]{10d,10d};
         }
     }
+    public static class Solver3Class implements Solver{
+        public Object[] solver(Object[] objectDoubleArray) {
+
+            return new Object[]{10d,10d};
+        }
+    }
 
     /*Классы solver-ов*/
-
     static Solver1Class solver1 = new Solver1Class();
     static Solver2Class solver2 = new Solver2Class();
+    static Solver3Class solver3 = new Solver3Class();
 
-    static Solver[] solverArray = {solver1, solver2};
 
+    static Solver[] solverArray = {solver1, solver2, solver3};
 
 
     /*Функция вывода сообщения пользователю*/
     public static void output() {
         System.out.println("Рассчет реакций первого порядка \n" +
                 "Введите значения через запятую: \n" +
-                "n, n0, t, [k, t(1/2)]");
+                parametersStringGrouped1 + "\n" +
+                parametersString);
     }
 
 
@@ -138,7 +145,7 @@ public class Solver_test2 {
 
 
     /*Функция arrayEquationCodeDetermine определяет equationCode и выводит его в виде массива для
-    * каждого из уравнений*/
+     * каждого из уравнений*/
     public static int[] arrayEquationCodeDetermine(Object[][] multiObjectArray) {
         int[] equationCodeArray = new int[multiObjectArray.length];
         for (int i = 0; i < multiObjectArray.length; i++) {
