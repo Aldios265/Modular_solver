@@ -35,13 +35,13 @@ public class MenuExecutor {
 
 
 
-    public static int mainMenu(Menu menuCartridge) {
+    public static int mainMenu(test.menu.Menu menu) {
 
-        String treeName = menuCartridge.getTreeName();
-        String[] tree = menuCartridge.getTree();
+        String treeName = menu.getTreeName();
+        String[] tree = menu.getTree();
 
-        String name = menuCartridge.getName();
-        String[] options = menuCartridge.getOptions();
+        String name = menu.getName();
+        String[] options = menu.getOptions();
 
 
         printHeader(name);
