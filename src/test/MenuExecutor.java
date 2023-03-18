@@ -2,7 +2,7 @@ package test;
 
 import java.util.Scanner;
 
-public class MainMenu {
+public class MenuExecutor {
 
     public static void printHeader(String name) {
         System.out.println("------------");
