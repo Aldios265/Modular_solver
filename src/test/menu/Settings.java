@@ -1,19 +1,11 @@
 package test.menu;
 
 public class Settings implements Menu{
-    String treeName = "Settings";
-    String[] tree = {"SelectLanguage", "Select"};
 
     String name = "Настройки";
-    String[] possibleOptions = {"Выбрать язык", "Выбрать что-то еще"};
+    String[] possibleOptions = {"Сменить язык", "Назад"};
+    String pastName = "Главное меню";
 
-    public String getTreeName() {
-        return treeName;
-    }
-
-    public String[] getTree() {
-        return tree;
-    }
 
     public String getName() {
         return name;
@@ -21,5 +13,9 @@ public class Settings implements Menu{
 
     public String[] getOptions() {
         return possibleOptions;
+    }
+
+    public String getPastFunction() {
+        return pastName;
     }
 }

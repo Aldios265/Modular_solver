@@ -5,6 +5,8 @@ import java.util.Scanner;
 public class MenuExecutor {
 
     public static void printHeader(String name) {
+        System.out.println("\n\n\n\n\n\n");
+        System.out.println("Modular Solver");
         System.out.println("------------");
         System.out.println(name);
         System.out.println("------------");
@@ -26,7 +28,7 @@ public class MenuExecutor {
         } catch (Exception e) {
             throw new IllegalArgumentException("Введен неверный символ, ожидался номер опции");
         }
-        if ((input > 0) && (input < length)) {
+        if ((input > 0) && (input <= length)) {
             return input;
         } else {
             throw new IllegalArgumentException("Введен неверный номер опции");
@@ -35,10 +37,8 @@ public class MenuExecutor {
 
 
 
-    public static int mainMenu(test.menu.Menu menu) {
+    public static String mainExecutor(test.menu.Menu menu) {
 
-        String treeName = menu.getTreeName();
-        String[] tree = menu.getTree();
 
         String name = menu.getName();
         String[] options = menu.getOptions();
@@ -46,11 +46,14 @@ public class MenuExecutor {
 
         printHeader(name);
         printChoices(options);
-        return userInput(options.length);
+        return options[userInput(options.length) - 1];
     }
 
 
 }
+
+
+
 
 
 
