@@ -1,4 +1,4 @@
-package test;
+package test.menu;
 
 public interface Menu {
     String getTreeName();

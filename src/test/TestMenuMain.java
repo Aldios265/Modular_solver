@@ -1,11 +1,9 @@
 package test;
-
-import test.cartridges.MainMenueCartridge;
+import test.menu.;
 
 public class TestMenuMain {
     public static void main(String[] args) {
-        MainMenueCartridge
-        MainMenuCartridge mainMenueCartridge = new MainMenuCartridge();
-        MainMenu.mainMenu(mainMenueCartridge);
+        test.menu.MainMenu mainMenu = new test.menu.MainMenu();
+        MainMenu.mainMenu(mainMenu);
     }
 }

@@ -35,7 +35,7 @@ public class MainMenu {
 
 
 
-    public static int mainMenu(MenuCartridge menuCartridge) {
+    public static int mainMenu(Menu menuCartridge) {
 
         String treeName = menuCartridge.getTreeName();
         String[] tree = menuCartridge.getTree();

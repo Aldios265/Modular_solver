@@ -1,6 +1,6 @@
-package test.cartridges;
+package test.menu;
 
-public class MainMenueCartridge {
+public class MainMenu implements Menu {
     String treeName = "MainMenu";
     String[] tree = {"ChooseProgram", "Settings", "Info", "Back"};
 
