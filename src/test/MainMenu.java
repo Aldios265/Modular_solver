@@ -37,20 +37,28 @@ public class MainMenu {
 
     public static int mainMenu(MenuCartridge menuCartridge) {
 
-        //----------------------
-        String treeName = "MainMenu";
-        String[] tree = {"ChooseProgram", "Settings", "Info", "Back"};
+        String treeName = menuCartridge.getTreeName();
+        String[] tree = menuCartridge.getTree();
 
-        String name = "ModularSolver\nГлавное меню";
-        String[] possibleOptions = {"Выбрать программу", "Настройки", "Информация", "Назад"};
-        //------------------
+        String name = menuCartridge.getName();
+        String[] options = menuCartridge.getOptions();
+
 
         printHeader(name);
-        printChoices(possibleOptions);
-        return userInput(possibleOptions.length);
+        printChoices(options);
+        return userInput(options.length);
     }
 
 
 }
 
 
+
+
+//        //----------------------
+//        String treeName = "MainMenu";
+//        String[] tree = {"ChooseProgram", "Settings", "Info", "Back"};
+//
+//        String name = "ModularSolver\nГлавное меню";
+//        String[] possibleOptions = {"Выбрать программу", "Настройки", "Информация", "Назад"};
+//        //------------------
