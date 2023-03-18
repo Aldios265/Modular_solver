@@ -4,16 +4,17 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    public static void printHeader() {
+    public static void printHeader(String name) {
         System.out.println("------------");
-        System.out.println("Modular solver v 1.1");
+        System.out.println(name);
         System.out.println("------------");
 
     }
-    public static void printChoices(Integer[] possibleInputs, String[] possibleOptions) {
-        for (int i = 0; i < possibleInputs.length; i++) {
-            System.out.println(possibleInputs[i] + ") " + possibleOptions[i]);
+    public static void printChoices(String[] possibleOptions) {
+        for (int i = 0; i < possibleOptions.length; i++) {
+            System.out.println((i + 1) + ") " + possibleOptions[i]);
         }
+        System.out.println("Для выбора введите номер опции:");
     }
 
 
@@ -34,12 +35,19 @@ public class MainMenu {
 
 
 
-    public static int mainMenu() {
-        Integer[] possibleInputs = {1, 2, 3};
-        String[] possibleOptions = {"Выбрать программу", "Настройки", "Информация"};
-        printHeader();
-        printChoices(possibleInputs, possibleOptions);
-        return userInput(possibleInputs.length);
+    public static int mainMenu(MenuCartridge menuCartridge) {
+
+        //----------------------
+        String treeName = "MainMenu";
+        String[] tree = {"ChooseProgram", "Settings", "Info", "Back"};
+
+        String name = "ModularSolver\nГлавное меню";
+        String[] possibleOptions = {"Выбрать программу", "Настройки", "Информация", "Назад"};
+        //------------------
+
+        printHeader(name);
+        printChoices(possibleOptions);
+        return userInput(possibleOptions.length);
     }
 
 

@@ -2,6 +2,7 @@ package test;
 
 public class TestMenuMain {
     public static void main(String[] args) {
-        MainMenu.mainMenu();
+        MainMenuCartridge mainMenueCartridge = new MainMenuCartridge();
+        MainMenu.mainMenu(mainMenueCartridge);
     }
 }
