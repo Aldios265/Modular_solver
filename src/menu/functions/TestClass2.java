@@ -1,4 +1,4 @@
-package Menu.functions;
+package menu.functions;
 
 public class TestClass2 {
     public static void someFunction() {

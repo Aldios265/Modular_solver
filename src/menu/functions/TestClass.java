@@ -1,4 +1,4 @@
-package Menu.functions;
+package menu.functions;
 
 
 /** Данный класс тестовый и служит как образец стороннего класса.**/

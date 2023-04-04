@@ -1,4 +1,4 @@
-package Menu.menus;
+package menu.menus;
 
 import menu.*;
 
