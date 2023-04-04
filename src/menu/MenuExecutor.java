@@ -12,7 +12,7 @@ public class MenuExecutor {
     /*Данный метод выводит в консоль заголовок меню*/
     public static void printHeader(String name) {
         System.out.println("\n\n\n\n\n\n");
-        System.out.println("Modular_Menu");
+        System.out.println("Modular_Solver");
         System.out.println("------------");
         System.out.println(name);
         System.out.println("------------");
