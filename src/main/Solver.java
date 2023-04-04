@@ -10,7 +10,7 @@ public class Solver {
 
     /** Блок инициализации функций **/
     /*Функция вывода сообщения пользователю*/
-    public static void output(String parametersString, int numberOfUnknowns) {
+    public static void output(String parametersString) {
         System.out.println("Введите значения через запятую: \n" + parametersString);
     }
 
@@ -199,7 +199,7 @@ public class Solver {
 
         //Вызов методов.
         String parametersString = parseArray(parametersArray);
-        output(parametersString, numberOfUnknowns);
+        output(parametersString);
         String[] userInput = input(parametersArray.length);
         Object[] objectDoubleArray = toDouble(userInput);
         Object[][] objectMultiArray = arrayGetOut(equationArray, parametersArray, objectDoubleArray);
