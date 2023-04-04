@@ -1,4 +1,5 @@
 package menu.menus;
+import main.*;
 
 
 import menu.*;
@@ -7,7 +8,8 @@ public class SolverMenu {
 
     Function runSolverExample1 = new Function() {
         public void execute() {
-            System.out.println("выполнение программы...");
+            CartridgeExample1 cartridge1 = new CartridgeExample1();
+            System.out.println(Solver.solverMain(cartridge1));
         }
     };
     Function infoSolverExample1 = new Function() {

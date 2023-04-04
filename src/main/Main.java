@@ -12,4 +12,5 @@ public class Main {
 //
 //        System.out.println(Solver.solverMain(cartridge1));
     }
+
 }
