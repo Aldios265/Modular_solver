@@ -16,7 +16,7 @@ public class MenuExample {
     Function program1 = new Function() {
         @Override
         public void execute() {
-            menu.functions.TestClass.someFunction();
+            System.out.println("Выполнение программы...");
         }
     };
 

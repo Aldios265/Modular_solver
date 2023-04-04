@@ -10,15 +10,16 @@ public class MenuExample2 {
             System.out.println("Информация о программе");
         }
     };
+
     Function program1 = new Function() {
         public void execute() {
-            menu.functions.TestClass.someFunction();
+            System.out.println("Выполнение программы 1 ...");
         }
     };
 
     Function program2 = new Function() {
         public void execute() {
-            menu.functions.TestClass2.someFunction();
+            System.out.println("Выполнение программы 2 ...");
         }
     };
 
