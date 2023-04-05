@@ -63,11 +63,11 @@ public class SolverMenu {
 
 
     public Object[][] menuArray = {{"Главное меню", "Главное меню", "Выбрать программу",  "Информация"},
-                        {"Выбрать программу", "Главное меню", "SolverExample1", "Назад"},
+                        {"Выбрать программу", "Главное меню", "SolverExample1", "SolverExample2", "Назад"},
                             {"SolverExample1", "Выбрать программу" , "Выполнить SolverExample1" , "Информация SolverExample1", "Назад"},
                                 {"Выполнить SolverExample1" , runSolverExample1},
                                 {"Информация SolverExample1", infoSolver1},
-                            {"SolverExample1", "Выбрать программу" , "Выполнить SolverExample1" , "Информация SolverExample1", "Назад"},
+                            {"SolverExample2", "Выбрать программу" , "Выполнить SolverExample2" , "Информация SolverExample2", "Назад"},
                                 {"Выполнить SolverExample2" , runSolverExample2},
                                 {"Информация SolverExample2", infoSolver2},
                         {"Информация", "Главное меню", "Кратко о программе", "Как работать с программой", "Как создать собственный Solver", "Назад"},
