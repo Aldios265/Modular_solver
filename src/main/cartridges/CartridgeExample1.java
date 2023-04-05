@@ -1,6 +1,6 @@
 package main.cartridges;
 import main.*;
-
+import java.lang.Math;
 
 
 public class CartridgeExample1 implements Cartridge {
